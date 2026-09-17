@@ -20,7 +20,7 @@ import { BookPreviewModal } from './components/BookPreviewModal';
 import { StickyBottomBar } from './components/StickyBottomBar';
 import { PolicyModal, PolicyType } from './components/PolicyModal';
 import { PolicyPage } from './components/PolicyPage';
-import { FloatingWhatsApp } from './components/FloatingWhatsApp';
+import { BackToTop } from './components/BackToTop';
 import { BUY_NOW_URL } from './data/bundleData';
 
 export default function App() {
@@ -90,8 +90,8 @@ export default function App() {
           onOpenCheckout={handleOpenCheckout} 
         />
 
-        {/* Floating WhatsApp Support Button */}
-        <FloatingWhatsApp onOpenContact={() => handleNavigate('contact')} />
+        {/* Back to Top Smooth Scroll Button */}
+        <BackToTop />
 
         {/* Instant Checkout Modal */}
         <CheckoutModal 
@@ -165,8 +165,8 @@ export default function App() {
         onOpenCheckout={handleOpenCheckout} 
       />
 
-      {/* 13. Floating WhatsApp Support Button from Screenshot */}
-      <FloatingWhatsApp onOpenContact={() => handleOpenPolicy('contact')} />
+      {/* 13. Floating Back to Top Smooth Scroll Button with SVG Icon */}
+      <BackToTop />
 
       {/* 14. High-Converting Instant Checkout Modal (UPI/GPay/PhonePe + Download Center) */}
       <CheckoutModal 

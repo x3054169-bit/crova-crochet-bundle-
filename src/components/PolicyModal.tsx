@@ -107,7 +107,7 @@ export function PolicyModal({ isOpen, initialPolicy = 'privacy', onClose }: Poli
               <div>
                 <h3 className="text-base font-bold text-stone-900 mb-1">1. Information We Collect</h3>
                 <p className="text-stone-600">
-                  When you purchase the <strong>Crochet Making Course and 1000+ Crochet Patterns Bundle</strong> from Crova, we collect basic contact details including your name, email address, and phone number (for WhatsApp customer support and download access delivery). We do NOT store credit card or debit card numbers on our servers. All transactions are securely encrypted and processed by RBI-authorized payment gateways (Razorpay, PhonePe, UPI, and Stripe).
+                  When you purchase the <strong>Crochet Making Course and 1200+ Crochet Patterns Bundle</strong> from Crova, we collect basic contact details including your name, email address, and phone number (for WhatsApp customer support and download access delivery). We do NOT store credit card or debit card numbers on our servers. All transactions are securely encrypted and processed by RBI-authorized payment gateways (Razorpay, PhonePe, UPI, and Stripe).
                 </p>
               </div>
 
@@ -163,7 +163,7 @@ export function PolicyModal({ isOpen, initialPolicy = 'privacy', onClose }: Poli
               <div>
                 <h3 className="text-base font-bold text-stone-900 mb-1">2. Digital Product License</h3>
                 <p className="text-stone-600">
-                  The Crochet Mastery Course, 1000+ Patterns, and 6 Bonus materials are delivered as digital downloadable goods (PDF files, video streams, and digital planners). You are granted a <strong>single-user, personal, and commercial crafting license</strong>:
+                  The Crochet Mastery Course, 1200+ Patterns, and 6 Bonus materials are delivered as digital downloadable goods (PDF files, video streams, and digital planners). You are granted a <strong>single-user, personal, and commercial crafting license</strong>:
                 </p>
                 <ul className="list-disc pl-5 space-y-1 mt-2 text-stone-600">
                   <li><strong>You CAN:</strong> Crochet physical items using these patterns and sell your finished handmade products at craft fairs, exhibitions, and online stores.</li>
@@ -200,7 +200,7 @@ export function PolicyModal({ isOpen, initialPolicy = 'privacy', onClose }: Poli
                 <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                 <div className="text-xs sm:text-sm text-emerald-950">
                   <span className="font-bold">Our 100% Customer Satisfaction Promise: </span>
-                  We stand firmly behind the quality of our 1000+ crochet pattern collection, stitch blueprints, and video masterclass.
+                  We stand firmly behind the quality of our 1200+ crochet pattern collection, stitch blueprints, and video masterclass.
                 </div>
               </div>
 
@@ -255,7 +255,7 @@ export function PolicyModal({ isOpen, initialPolicy = 'privacy', onClose }: Poli
                   Immediately upon successful payment confirmation (within 5 seconds), you are automatically redirected to our <strong>Secure Digital Resource Dashboard</strong> where you can instantly download:
                 </p>
                 <ul className="list-disc pl-5 space-y-1.5 mt-2 text-stone-600">
-                  <li>All 1000+ High-Definition PDF Pattern Blueprints.</li>
+                  <li>All 1200+ High-Definition PDF Pattern Blueprints.</li>
                   <li>Video Mastery Course streaming links and downloadable lessons.</li>
                   <li>Digital Crochet Planner &amp; 6 Bonus Guides.</li>
                 </ul>

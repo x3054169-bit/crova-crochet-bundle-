@@ -202,6 +202,20 @@ export function Footer({ onOpenPolicy }: FooterProps) {
             </button>
             <span>•</span>
             <span>Copyright © 2026 Crova. All Rights Reserved.</span>
+            <span>•</span>
+            <button
+              id="footer-back-to-top"
+              type="button"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="inline-flex items-center gap-1 text-emerald-300 hover:text-white transition-colors cursor-pointer font-medium"
+              title="Scroll back to top"
+            >
+              <span>Back to top</span>
+              <svg className="w-3.5 h-3.5 stroke-current" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 19V5" />
+                <path d="M5 12l7-7 7 7" />
+              </svg>
+            </button>
           </div>
         </div>
       </div>

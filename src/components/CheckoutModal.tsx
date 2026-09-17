@@ -77,10 +77,10 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
             <div className="bg-amber-50 border border-amber-200/80 rounded-xl p-3.5 mb-5 flex items-center justify-between">
               <div>
                 <p className="text-xs font-bold text-stone-900">The Ultimate Crochet Bundle</p>
-                <p className="text-[11px] text-stone-600">1000+ Patterns + Video Course + 6 Bonuses</p>
+                <p className="text-[11px] text-stone-600">1200+ Patterns + Video Course + 6 Bonuses</p>
               </div>
               <div className="text-right">
-                <span className="text-xs text-stone-400 line-through mr-1.5">₹4,999</span>
+                <span className="text-xs text-stone-400 line-through mr-1.5">₹3,999</span>
                 <span className="text-xl font-black text-[#d32f2f]">₹199</span>
               </div>
             </div>
@@ -269,7 +269,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                     <Download className="w-4 h-4" />
                   </div>
                   <div>
-                    <p className="text-xs font-bold text-stone-900">1000+ Crochet Patterns Master Pack</p>
+                    <p className="text-xs font-bold text-stone-900">1200+ Crochet Patterns Master Pack</p>
                     <p className="text-[10px] text-stone-500">High-Res Printable PDFs (All Categories)</p>
                   </div>
                 </div>

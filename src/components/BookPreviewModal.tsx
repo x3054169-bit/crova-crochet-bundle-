@@ -113,7 +113,7 @@ export function BookPreviewModal({ isOpen, onClose, onOpenCheckout }: BookPrevie
               className="bg-[#f95721] hover:bg-[#e04511] text-white text-xs sm:text-sm font-bold px-5 py-2.5 rounded-lg shadow-md inline-flex items-center gap-1.5 cursor-pointer no-underline"
             >
               <Zap className="w-4 h-4 fill-yellow-300 text-yellow-300" />
-              <span>Get Full Book &amp; 1000+ Patterns @ ₹199</span>
+              <span>Get Full Book &amp; 1200+ Patterns @ ₹199</span>
             </a>
           </div>
         </div>

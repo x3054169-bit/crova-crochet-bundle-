@@ -326,7 +326,7 @@ export const FAQS: FaqItem[] = [
   {
     id: 'faq-1',
     question: 'What is Included In Ultimate Crochet Bundle?',
-    answer: "The Bundle Includes 1000 Unique Crochet Patterns, Step-By-Step Video Tutorials, A Digital Crochet Planner, And Lifetime Access To All Resources. You'll Find Patterns For Home Decor, Toys, Superheroes, Baby Items, And Festive Decorations"
+    answer: "The Bundle Includes 1200 Unique Crochet Patterns, Step-By-Step Video Tutorials, A Digital Crochet Planner, And Lifetime Access To All Resources. You'll Find Patterns For Home Decor, Toys, Superheroes, Baby Items, And Festive Decorations"
   },
   {
     id: 'faq-2',

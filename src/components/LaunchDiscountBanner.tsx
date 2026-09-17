@@ -345,8 +345,13 @@ export function LaunchDiscountBanner({ onOpenCheckout }: LaunchDiscountBannerPro
                 </h3>
 
                 {/* Price in vibrant red */}
-                <div className="text-2xl sm:text-3xl font-black text-[#dc2626] mt-1">
-                  Just ₹199
+                <div className="flex items-baseline gap-2 mt-1">
+                  <span className="text-2xl sm:text-3xl font-black text-[#dc2626]">
+                    Just ₹199
+                  </span>
+                  <span className="text-lg sm:text-xl font-bold text-stone-400 line-through">
+                    ₹3,999
+                  </span>
                 </div>
 
                 {/* Star rating & Trust Score */}
@@ -357,7 +362,7 @@ export function LaunchDiscountBanner({ onOpenCheckout }: LaunchDiscountBannerPro
                     ))}
                   </div>
                   <span className="text-xs sm:text-sm font-bold text-stone-800 ml-1">
-                    Trust Score <strong className="text-stone-950 font-black">4.9</strong> | <strong className="text-stone-950 font-black">9430</strong> Review
+                    Trust Score <strong className="text-stone-950 font-black">4.9</strong> | <strong className="text-stone-950 font-black">8,540</strong> Reviews
                   </span>
                 </div>
 

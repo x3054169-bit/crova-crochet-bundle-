@@ -53,7 +53,7 @@ export function PolicyPage({ policy, onNavigate, onOpenCheckout }: PolicyPagePro
         return {
           title: 'Refund & Returns Policy',
           category: '100% Satisfaction Guarantee',
-          description: 'Our promise of quality and complete refund terms for the 1000+ Crochet Patterns and Video Course bundle.',
+          description: 'Our promise of quality and complete refund terms for the 1200+ Crochet Patterns and Video Course bundle.',
           updated: 'January 2026'
         };
       case 'shipping':
@@ -216,7 +216,7 @@ export function PolicyPage({ policy, onNavigate, onOpenCheckout }: PolicyPagePro
                     1. Information We Collect
                   </h2>
                   <p className="mb-3">
-                    When you purchase the <strong>Crochet Making Course and 1000+ Crochet Patterns Bundle</strong> from Crova, we collect essential contact details to deliver your digital access and provide support:
+                    When you purchase the <strong>Crochet Making Course and 1200+ Crochet Patterns Bundle</strong> from Crova, we collect essential contact details to deliver your digital access and provide support:
                   </p>
                   <ul className="list-disc pl-5 space-y-1.5 text-stone-600">
                     <li><strong>Contact Details:</strong> Your full name, email address, and WhatsApp/mobile phone number for instant digital access delivery and support tickets.</li>
@@ -444,7 +444,7 @@ export function PolicyPage({ policy, onNavigate, onOpenCheckout }: PolicyPagePro
                   </p>
                   <ul className="list-disc pl-5 space-y-2 text-stone-600">
                     <li>
-                      <strong>On-Screen Dashboard:</strong> Your browser automatically redirects to the high-speed download center containing all 1000+ Patterns, Video Courses, Stitch Guides, and Planners.
+                      <strong>On-Screen Dashboard:</strong> Your browser automatically redirects to the high-speed download center containing all 1200+ Patterns, Video Courses, Stitch Guides, and Planners.
                     </li>
                     <li>
                       <strong>Automated Email Dispatch:</strong> A permanent access link and receipt are simultaneously dispatched to the email address entered during checkout.
@@ -586,7 +586,7 @@ export function PolicyPage({ policy, onNavigate, onOpenCheckout }: PolicyPagePro
                 Ready to Start Your Crochet Journey?
               </h3>
               <p className="text-xs sm:text-sm text-stone-300 max-w-xl">
-                Get instant lifetime access to 1000+ Crochet Patterns, Video Course in English &amp; Hindi, 30 New Stitches, and 6 Free Bonuses today for just <strong className="text-emerald-300 font-black">₹199</strong> (Regular ₹2,999).
+                Get instant lifetime access to 1200+ Crochet Patterns, Video Course in English &amp; Hindi, 30 New Stitches, and 6 Free Bonuses today for just <strong className="text-emerald-300 font-black">₹199</strong> (Regular ₹3,999).
               </p>
             </div>
 

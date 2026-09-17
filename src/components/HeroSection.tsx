@@ -12,7 +12,7 @@ export function HeroSection({ onOpenCheckout, onOpenPreview }: HeroSectionProps)
       {/* 1. Orange-Red Uppercase Eyebrow from Screenshot 1 */}
       <div className="mb-2">
         <span className="text-xs sm:text-sm font-extrabold tracking-wide uppercase text-[#ff5500]">
-          CROCHET MAKING COURSE AND 1000+ CROCHET PATTERNS BUNDLE
+          CROCHET MAKING COURSE AND 1200+ CROCHET PATTERNS BUNDLE
         </span>
       </div>
 
@@ -25,7 +25,7 @@ export function HeroSection({ onOpenCheckout, onOpenPreview }: HeroSectionProps)
       <div className="inline-block mb-6 sm:mb-8 w-full max-w-2xl">
         <div className="border-2 border-dashed border-stone-400/90 rounded-md py-2 px-6 sm:px-10 bg-transparent">
           <span className="text-sm sm:text-lg font-bold text-[#ff5500] tracking-wide">
-            Loved by 15,000+ Crochet Enthusiasts!
+            Loved by 15,000+ Crafters!
           </span>
         </div>
       </div>
@@ -55,13 +55,13 @@ export function HeroSection({ onOpenCheckout, onOpenPreview }: HeroSectionProps)
 
           {/* Right Column: Pricing, Trustscore, Bullets, Large CTA */}
           <div className="md:col-span-6 flex flex-col justify-center">
-            {/* Price block: Rs. 199.00 Rs. 4999.00/- */}
+            {/* Price block: Rs. 199.00 Rs. 3999.00/- */}
             <div className="flex flex-wrap items-baseline gap-2.5 mb-2">
               <span className="text-3xl sm:text-4xl font-black text-[#b91c1c] tracking-tight">
                 Rs. 199.00
               </span>
               <span className="text-xl sm:text-2xl font-bold text-[#475569] line-through decoration-[#475569] decoration-2">
-                Rs. 4999.00/-
+                Rs. 3999.00/-
               </span>
             </div>
 
@@ -81,7 +81,7 @@ export function HeroSection({ onOpenCheckout, onOpenPreview }: HeroSectionProps)
             <ul className="space-y-1.5 mb-6 text-sm sm:text-base text-stone-800 font-medium">
               <li className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-stone-500 shrink-0" />
-                <span>1000+ Crochet Patterns</span>
+                <span>1200+ Crochet Patterns</span>
               </li>
               <li className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-stone-500 shrink-0" />

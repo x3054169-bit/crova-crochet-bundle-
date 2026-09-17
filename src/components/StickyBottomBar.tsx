@@ -53,9 +53,9 @@ export function StickyBottomBar({ onOpenCheckout }: StickyBottomBarProps) {
           <div>
             <div className="flex items-baseline gap-2">
               <span className="text-xl sm:text-2xl font-black text-amber-400">₹199</span>
-              <span className="text-xs text-stone-400 line-through">₹4,999</span>
+              <span className="text-xs text-stone-400 line-through">₹3,999</span>
               <span className="hidden sm:inline-block text-[10px] uppercase font-bold bg-emerald-700 text-white px-1.5 py-0.5 rounded">
-                96% OFF
+                95% OFF
               </span>
             </div>
             <p className="text-[10px] text-stone-400 hidden xs:block">

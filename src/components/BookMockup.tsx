@@ -55,7 +55,7 @@ export function BookMockup({ size = 'large' }: { size?: 'small' | 'medium' | 'la
 
             {/* Bottom Book Footnote */}
             <div className="border-t border-stone-800 pt-2 flex items-center justify-between text-[10px] text-stone-400">
-              <span className="font-semibold text-amber-400">1000+ Patterns</span>
+              <span className="font-semibold text-amber-400">1200+ Patterns</span>
               <span className="text-stone-400">Master Edition</span>
             </div>
           </div>
@@ -64,9 +64,9 @@ export function BookMockup({ size = 'large' }: { size?: 'small' | 'medium' | 'la
           <div className="absolute right-0 top-1 bottom-1 w-2 bg-gradient-to-l from-stone-200 via-stone-100 to-stone-300 rounded-r shadow-inner" />
         </div>
 
-        {/* 1000+ Patterns Circular Gold Badge */}
+        {/* 1200+ Patterns Circular Gold Badge */}
         <div className="absolute -top-3 -right-3 w-16 h-16 rounded-full bg-gradient-to-tr from-amber-500 via-yellow-400 to-amber-300 text-stone-900 font-extrabold flex flex-col items-center justify-center shadow-lg border-2 border-white ring-2 ring-amber-400/50 transform rotate-12">
-          <span className="text-[12px] leading-tight font-black">1000+</span>
+          <span className="text-[12px] leading-tight font-black">1200+</span>
           <span className="text-[8px] uppercase tracking-tighter font-bold">Patterns</span>
         </div>
 

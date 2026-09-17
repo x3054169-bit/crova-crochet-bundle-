@@ -106,7 +106,7 @@ export function HeaderBar({ onOpenCheckout, onOpenPreview }: HeaderBarProps) {
             <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
             <span className="font-bold text-stone-900">4.9/5</span>
             <span className="text-stone-300">•</span>
-            <span className="text-stone-600">3,200+ Crafters</span>
+            <span className="text-stone-600">15,000+ Crafters</span>
           </div>
           <div className="sm:hidden inline-flex items-center gap-1 text-[11px] font-bold text-stone-700 bg-white/90 border border-stone-200 px-2 py-0.5 rounded-md shadow-2xs">
             <Star className="w-3 h-3 text-amber-500 fill-amber-500" />
@@ -142,7 +142,7 @@ export function HeaderBar({ onOpenCheckout, onOpenPreview }: HeaderBarProps) {
             <ShoppingBag className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
             <div className="flex items-baseline gap-1 sm:gap-1.5">
               <span className="font-black">Get Bundle</span>
-              <span className="text-[10px] sm:text-[11px] line-through text-orange-200 hidden md:inline">₹1,999</span>
+              <span className="text-[10px] sm:text-[11px] line-through text-orange-200 hidden md:inline">₹3,999</span>
               <span className="bg-white/20 text-white text-[10px] sm:text-xs font-black px-1.5 py-0.5 rounded">₹199</span>
             </div>
           </a>
