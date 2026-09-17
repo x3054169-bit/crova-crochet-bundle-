@@ -1,0 +1,6 @@
+{
+  "name": "Crova - The Ultimate Premium Crochet Bundle",
+  "description": "Crova's bestselling crochet book and 1200+ pattern bundle with video mastery course, bonuses, and lifetime access.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
