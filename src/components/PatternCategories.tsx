@@ -42,8 +42,8 @@ export function PatternCategories() {
 
       {/* 7th Category: Full width centered card for Holidays & Festivals matching Screenshot 2 */}
       {holidayCategory && (
-        <div className="bg-white rounded-3xl border border-stone-200/90 shadow-md p-6 sm:p-8 max-w-5xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-10">
+        <div className="bg-white rounded-3xl border border-stone-200/90 shadow-md p-4 sm:p-8 max-w-5xl mx-auto">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-5 sm:gap-10">
             {/* Title on the left */}
             <div className="w-full md:w-1/3 text-center md:text-left">
               <h3 className="text-lg sm:text-xl font-black text-[#f95721] tracking-tight">
@@ -56,7 +56,7 @@ export function PatternCategories() {
               className="w-full md:w-auto flex justify-center cursor-pointer group shrink-0"
               onClick={() => setSelectedImage(holidayCategory.sampleImages[0])}
             >
-              <div className="w-48 sm:w-56">
+              <div className="w-60 sm:w-56">
                 <YarnFrame>
                   <div className="relative aspect-[3/4] overflow-hidden bg-stone-100">
                     <img
@@ -164,7 +164,7 @@ function CategoryCard({
 
   const imageBlock = (
     <div 
-      className="cursor-pointer w-36 sm:w-44 shrink-0 mx-auto group"
+      className="cursor-pointer w-52 sm:w-48 shrink-0 mx-auto group my-1 sm:my-0"
       onClick={() => onZoomImage(featuredImage)}
     >
       <YarnFrame>
@@ -185,16 +185,16 @@ function CategoryCard({
   );
 
   return (
-    <div className="bg-white rounded-3xl border border-stone-200/90 shadow-md p-5 sm:p-7 flex flex-col sm:flex-row items-center gap-5 sm:gap-6 transition-all h-full">
+    <div className="bg-white rounded-3xl border border-stone-200/90 shadow-md p-4 sm:p-7 flex flex-col sm:flex-row items-center gap-4 sm:gap-6 transition-all h-full">
       {isImageLeft ? (
         <>
-          <div className="order-2 sm:order-1">{imageBlock}</div>
-          <div className="order-1 sm:order-2 flex-1">{textBlock}</div>
+          <div className="order-2 sm:order-1 w-full sm:w-auto flex justify-center">{imageBlock}</div>
+          <div className="order-1 sm:order-2 flex-1 w-full">{textBlock}</div>
         </>
       ) : (
         <>
-          <div className="order-1 flex-1">{textBlock}</div>
-          <div className="order-2">{imageBlock}</div>
+          <div className="order-1 flex-1 w-full">{textBlock}</div>
+          <div className="order-2 w-full sm:w-auto flex justify-center">{imageBlock}</div>
         </>
       )}
     </div>

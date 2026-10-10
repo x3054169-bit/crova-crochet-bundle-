@@ -6,14 +6,6 @@
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
-    /* On mobile, slightly increase root font size for comfortable, zoomed-in touch readability */
-    font-size: 17px;
-  }
-
-  @media (min-width: 640px) {
-    html {
-      font-size: 16px;
-    }
   }
 
   body {
