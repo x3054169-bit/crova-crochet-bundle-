@@ -23,13 +23,41 @@ import { PolicyPage } from './components/PolicyPage';
 import { BackToTop } from './components/BackToTop';
 import { BUY_NOW_URL } from './data/bundleData';
 import { Offer2200Placeholder } from './components/Offer2200Placeholder';
+import { PageSwitcherBar } from './components/PageSwitcherBar';
+
+const resolveInitialOffer = (): '2200' | '1000' => {
+  if (typeof window === 'undefined') return '2200';
+
+  // 1. Check path (/2200 or /2200/)
+  const path = window.location.pathname.replace(/\/+$/, '');
+  if (path === '/2200' || path.endsWith('/2200')) return '2200';
+  if (path === '/1000' || path.endsWith('/1000')) return '1000';
+
+  // 2. Check query string (?page=2200, ?offer=2200, ?bundle=2200, ?2200)
+  const search = window.location.search.toLowerCase();
+  if (search.includes('2200')) return '2200';
+  if (search.includes('1000')) return '1000';
+
+  // 3. Check hash (#2200, #/2200)
+  const hash = window.location.hash.toLowerCase();
+  if (hash.includes('2200')) return '2200';
+  if (hash.includes('1000')) return '1000';
+
+  // 4. Check user's saved preference in localStorage
+  try {
+    const saved = localStorage.getItem('crova_active_bundle');
+    if (saved === '1000') return '1000';
+    if (saved === '2200') return '2200';
+  } catch {
+    // ignore
+  }
+
+  // 5. Default to '2200' so the user is guaranteed to see the 2200+ Mastery Bundle page immediately
+  return '2200';
+};
 
 export default function App() {
-  const [is2200Route, setIs2200Route] = useState<boolean>(() => {
-    if (typeof window === 'undefined') return false;
-    const path = window.location.pathname.replace(/\/+$/, '');
-    return path === '/2200';
-  });
+  const [activeOffer, setActiveOffer] = useState<'2200' | '1000'>(resolveInitialOffer);
 
   const [currentView, setCurrentView] = useState<'home' | PolicyType>('home');
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
@@ -39,18 +67,44 @@ export default function App() {
     policy: 'privacy',
   });
 
+  const handleSwitchOffer = (offer: '2200' | '1000') => {
+    setActiveOffer(offer);
+    try {
+      localStorage.setItem('crova_active_bundle', offer);
+      if (offer === '2200') {
+        window.history.pushState(null, '', '/2200');
+      } else {
+        window.history.pushState(null, '', '/');
+      }
+    } catch {
+      // ignore
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   useEffect(() => {
     const handleLocationChange = () => {
       const path = window.location.pathname.replace(/\/+$/, '');
-      setIs2200Route(path === '/2200');
+      const hash = window.location.hash.toLowerCase();
+      const search = window.location.search.toLowerCase();
+
+      if (path === '/2200' || hash.includes('2200') || search.includes('2200')) {
+        setActiveOffer('2200');
+      } else if (path === '/1000' || hash.includes('1000') || search.includes('1000')) {
+        setActiveOffer('1000');
+      }
     };
     window.addEventListener('popstate', handleLocationChange);
-    return () => window.removeEventListener('popstate', handleLocationChange);
+    window.addEventListener('hashchange', handleLocationChange);
+    return () => {
+      window.removeEventListener('popstate', handleLocationChange);
+      window.removeEventListener('hashchange', handleLocationChange);
+    };
   }, []);
 
   // Isolated route for the 2200+ Crochet Offer
-  if (is2200Route) {
-    return <Offer2200Placeholder />;
+  if (activeOffer === '2200') {
+    return <Offer2200Placeholder onSwitchOffer={handleSwitchOffer} />;
   }
 
   const handleOpenCheckout = () => {
@@ -95,9 +149,8 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Ensure fresh page loads and reloads always land cleanly on the Home sales page
+  // Ensure fresh page loads default cleanly to the main view
   useEffect(() => {
-    clearHash();
     setCurrentView('home');
   }, []);
 
@@ -125,6 +178,12 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#f7f5f2] text-stone-800 flex flex-col font-sans">
+      {/* Top Universal Page Switcher Bar */}
+      <PageSwitcherBar 
+        currentOffer="1000" 
+        onSwitch={handleSwitchOffer} 
+      />
+
       {/* 1. Top Offer Countdown Bar & Crova WordPress Navbar */}
       <HeaderBar 
         onOpenCheckout={handleOpenCheckout} 

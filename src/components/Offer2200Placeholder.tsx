@@ -13,6 +13,7 @@ import {
 import { OFFER_2200_CONFIG } from '../data/offer2200';
 import { PolicyModal, PolicyType } from './PolicyModal';
 import { ReviewSlider } from './ReviewSlider';
+import { PageSwitcherBar } from './PageSwitcherBar';
 
 interface CategoryItem {
   id: string;
@@ -369,7 +370,11 @@ const FAQS_LIST = [
   },
 ];
 
-export function Offer2200Placeholder() {
+interface Offer2200PlaceholderProps {
+  onSwitchOffer?: (offer: '2200' | '1000') => void;
+}
+
+export function Offer2200Placeholder({ onSwitchOffer }: Offer2200PlaceholderProps = {}) {
   const [timeLeft, setTimeLeft] = useState({
     hours: 14,
     minutes: 21,
@@ -584,6 +589,24 @@ export function Offer2200Placeholder() {
 
   return (
     <div className="min-h-screen bg-[#faf7f2] text-stone-800 font-sans selection:bg-amber-200 selection:text-amber-950 pb-20">
+      {/* Top Universal Page Switcher Bar */}
+      <PageSwitcherBar 
+        currentOffer="2200" 
+        onSwitch={onSwitchOffer || ((target) => {
+          try {
+            localStorage.setItem('crova_active_bundle', target);
+            if (target === '2200') {
+              window.history.pushState(null, '', '/2200');
+            } else {
+              window.history.pushState(null, '', '/');
+            }
+            window.location.reload();
+          } catch {
+            window.location.href = target === '2200' ? '/2200' : '/';
+          }
+        })}
+      />
+
       {/* Top Countdown Header Bar */}
       <header className="w-full bg-[#1c1917] text-white py-2.5 px-4 shadow-sm border-b border-stone-800">
         <div className="max-w-md mx-auto text-center">
