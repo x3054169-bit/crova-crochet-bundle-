@@ -101,6 +101,15 @@ export default function App() {
     };
   }, []);
 
+  // Sync document title dynamically with active offer
+  useEffect(() => {
+    if (activeOffer === '2200') {
+      document.title = 'Crova - 2200+ Crochet Patterns The Ultimate Bundle | Just ₹199';
+    } else {
+      document.title = 'Crova - The Ultimate Premium Crochet Bundle | 1200+ Patterns';
+    }
+  }, [activeOffer]);
+
   // Security & protection: disable right-click context menu and inspect shortcuts (Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C, F12, Ctrl+U)
   useEffect(() => {
     const handleContextMenu = (e: MouseEvent) => {
