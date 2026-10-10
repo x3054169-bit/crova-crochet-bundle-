@@ -341,7 +341,7 @@ export const FAQS: FaqItem[] = [
   {
     id: 'faq-4',
     question: 'What If I Don\'t Receive Any Email After Purchase?',
-    answer: "Although, before mailing us, We request you to check your spam & promotional mails as well, if you haven't received your order please contact us on our support email: facctymann@gmail.com or WhatsApp Us: 8871694891"
+    answer: "Although, before mailing us, We request you to check your spam & promotional mails as well, if you haven't received your order please contact us on our support email: support.crova@gmail.com or WhatsApp Us: 8871694891"
   },
   {
     id: 'faq-5',

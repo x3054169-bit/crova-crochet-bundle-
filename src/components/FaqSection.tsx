@@ -28,10 +28,10 @@ export function FaqSection() {
         <p className="text-stone-900 font-normal leading-relaxed text-xs sm:text-sm md:text-[15px]">
           Although, before mailing us, We request you to check your spam &amp; promotional mails as well, if you haven't received your order please contact us on our support email:{' '}
           <a
-            href="mailto:facctymann@gmail.com"
+            href="mailto:support.crova@gmail.com"
             className="font-medium text-stone-900 hover:text-emerald-700 underline underline-offset-2"
           >
-            facctymann@gmail.com
+            support.crova@gmail.com
           </a>{' '}
           or WhatsApp Us:{' '}
           <a

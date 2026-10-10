@@ -6,10 +6,18 @@ export type PolicyType = 'privacy' | 'terms' | 'refund' | 'shipping' | 'contact'
 interface PolicyModalProps {
   isOpen: boolean;
   initialPolicy?: PolicyType;
+  offerType?: '1200' | '2200';
   onClose: () => void;
 }
 
-export function PolicyModal({ isOpen, initialPolicy = 'privacy', onClose }: PolicyModalProps) {
+export function PolicyModal({ isOpen, initialPolicy = 'privacy', offerType = '2200', onClose }: PolicyModalProps) {
+  const is2200 = offerType === '2200';
+  const patternCount = is2200 ? '2200+ Crochet Patterns' : '1200+ Crochet Patterns';
+  const bundleTitle = is2200 
+    ? 'Crochet Making Course and 2200+ Crochet Patterns Mega Bundle' 
+    : 'Crochet Making Course and 1200+ Crochet Patterns Bundle';
+  const bundlePrice = is2200 ? '₹99' : '₹199';
+  const bonusCount = is2200 ? '9 Exclusive Artisan Bonuses' : '6 Bonus materials';
   const [activeTab, setActiveTab] = useState<PolicyType>(initialPolicy);
 
   // Contact form state
@@ -107,7 +115,7 @@ export function PolicyModal({ isOpen, initialPolicy = 'privacy', onClose }: Poli
               <div>
                 <h3 className="text-base font-bold text-stone-900 mb-1">1. Information We Collect</h3>
                 <p className="text-stone-600">
-                  When you purchase the <strong>Crochet Making Course and 1200+ Crochet Patterns Bundle</strong> from Crova, we collect basic contact details including your name, email address, and phone number (for WhatsApp customer support and download access delivery). We do NOT store credit card or debit card numbers on our servers. All transactions are securely encrypted and processed by RBI-authorized payment gateways (Razorpay, PhonePe, UPI, and Stripe).
+                  When you purchase the <strong>{bundleTitle}</strong> from Crova, we collect basic contact details including your name, email address, and phone number (for WhatsApp customer support and download access delivery). We do NOT store credit card or debit card numbers on our servers. All transactions are securely encrypted and processed by RBI-authorized payment gateways (Razorpay, PhonePe, UPI, and Stripe).
                 </p>
               </div>
 
@@ -138,7 +146,7 @@ export function PolicyModal({ isOpen, initialPolicy = 'privacy', onClose }: Poli
               <div>
                 <h3 className="text-base font-bold text-stone-900 mb-1">5. Your Privacy Rights</h3>
                 <p className="text-stone-600">
-                  You have the right to request a copy of your purchase records or ask for the deletion of your contact data from our marketing mailing lists at any time by emailing <span className="font-semibold text-stone-900">support@digimart.com</span>.
+                  You have the right to request a copy of your purchase records or ask for the deletion of your contact data from our marketing mailing lists at any time by emailing <span className="font-semibold text-stone-900">support.crova@gmail.com</span> or contacting us on WhatsApp (+91 8871694891).
                 </p>
               </div>
             </div>
@@ -163,7 +171,7 @@ export function PolicyModal({ isOpen, initialPolicy = 'privacy', onClose }: Poli
               <div>
                 <h3 className="text-base font-bold text-stone-900 mb-1">2. Digital Product License</h3>
                 <p className="text-stone-600">
-                  The Crochet Mastery Course, 1200+ Patterns, and 6 Bonus materials are delivered as digital downloadable goods (PDF files, video streams, and digital planners). You are granted a <strong>single-user, personal, and commercial crafting license</strong>:
+                  The Crochet Mastery Course, {patternCount}, and {bonusCount} are delivered as digital downloadable goods (PDF files, video streams, and digital planners). You are granted a <strong>single-user, personal, and commercial crafting license</strong>:
                 </p>
                 <ul className="list-disc pl-5 space-y-1 mt-2 text-stone-600">
                   <li><strong>You CAN:</strong> Crochet physical items using these patterns and sell your finished handmade products at craft fairs, exhibitions, and online stores.</li>
@@ -174,7 +182,7 @@ export function PolicyModal({ isOpen, initialPolicy = 'privacy', onClose }: Poli
               <div>
                 <h3 className="text-base font-bold text-stone-900 mb-1">3. Lifetime Access</h3>
                 <p className="text-stone-600">
-                  Your one-time payment of ₹199 grants you lifetime access to the resource dashboard, including all future pattern additions and curriculum updates without recurring monthly subscription fees.
+                  Your one-time payment of {bundlePrice} grants you lifetime access to the resource dashboard, including all future pattern additions and curriculum updates without recurring monthly subscription fees.
                 </p>
               </div>
 
@@ -200,7 +208,7 @@ export function PolicyModal({ isOpen, initialPolicy = 'privacy', onClose }: Poli
                 <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                 <div className="text-xs sm:text-sm text-emerald-950">
                   <span className="font-bold">Our 100% Customer Satisfaction Promise: </span>
-                  We stand firmly behind the quality of our 1200+ crochet pattern collection, stitch blueprints, and video masterclass.
+                  We stand firmly behind the quality of our {patternCount} collection, stitch blueprints, and video masterclass.
                 </div>
               </div>
 
@@ -219,7 +227,7 @@ export function PolicyModal({ isOpen, initialPolicy = 'privacy', onClose }: Poli
               <div>
                 <h3 className="text-base font-bold text-stone-900 mb-1">2. How to Request a Refund</h3>
                 <p className="text-stone-600">
-                  Simply send an email to <span className="font-semibold text-stone-900">support@digimart.com</span> or message our dedicated WhatsApp support with your Order ID and payment transaction reference. Our team typically processes approvals within 24 hours.
+                  Simply send an email to <span className="font-semibold text-stone-900">support.crova@gmail.com</span> or message our dedicated WhatsApp support (+91 8871694891) with your Order ID and payment transaction reference. Our team typically processes approvals within 24 hours.
                 </p>
               </div>
 
@@ -255,9 +263,9 @@ export function PolicyModal({ isOpen, initialPolicy = 'privacy', onClose }: Poli
                   Immediately upon successful payment confirmation (within 5 seconds), you are automatically redirected to our <strong>Secure Digital Resource Dashboard</strong> where you can instantly download:
                 </p>
                 <ul className="list-disc pl-5 space-y-1.5 mt-2 text-stone-600">
-                  <li>All 1200+ High-Definition PDF Pattern Blueprints.</li>
+                  <li>All {patternCount} High-Definition PDF Pattern Blueprints.</li>
                   <li>Video Mastery Course streaming links and downloadable lessons.</li>
-                  <li>Digital Crochet Planner &amp; 6 Bonus Guides.</li>
+                  <li>Digital Crochet Planner &amp; {bonusCount}.</li>
                 </ul>
               </div>
 
@@ -313,7 +321,7 @@ export function PolicyModal({ isOpen, initialPolicy = 'privacy', onClose }: Poli
                   </div>
                   <div>
                     <h4 className="font-bold text-stone-900 text-sm">Email Support</h4>
-                    <p className="text-xs text-stone-600 mt-0.5">facctymann@gmail.com</p>
+                    <p className="text-xs text-stone-600 mt-0.5">support.crova@gmail.com</p>
                     <p className="text-[11px] text-stone-500 mt-2 flex items-center gap-1">
                       <Clock className="w-3 h-3 text-amber-600" />
                       Avg. Response: Under 2 hours

@@ -22,8 +22,15 @@ import { PolicyModal, PolicyType } from './components/PolicyModal';
 import { PolicyPage } from './components/PolicyPage';
 import { BackToTop } from './components/BackToTop';
 import { BUY_NOW_URL } from './data/bundleData';
+import { Offer2200Placeholder } from './components/Offer2200Placeholder';
 
 export default function App() {
+  const [is2200Route, setIs2200Route] = useState<boolean>(() => {
+    if (typeof window === 'undefined') return false;
+    const path = window.location.pathname.replace(/\/+$/, '');
+    return path === '/2200';
+  });
+
   const [currentView, setCurrentView] = useState<'home' | PolicyType>('home');
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
@@ -31,6 +38,20 @@ export default function App() {
     isOpen: false,
     policy: 'privacy',
   });
+
+  useEffect(() => {
+    const handleLocationChange = () => {
+      const path = window.location.pathname.replace(/\/+$/, '');
+      setIs2200Route(path === '/2200');
+    };
+    window.addEventListener('popstate', handleLocationChange);
+    return () => window.removeEventListener('popstate', handleLocationChange);
+  }, []);
+
+  // Isolated route for the 2200+ Crochet Offer
+  if (is2200Route) {
+    return <Offer2200Placeholder />;
+  }
 
   const handleOpenCheckout = () => {
     try {

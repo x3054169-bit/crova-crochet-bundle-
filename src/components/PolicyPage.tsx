@@ -53,7 +53,7 @@ export function PolicyPage({ policy, onNavigate, onOpenCheckout }: PolicyPagePro
         return {
           title: 'Refund & Returns Policy',
           category: '100% Satisfaction Guarantee',
-          description: 'Our promise of quality and complete refund terms for the 1200+ Crochet Patterns and Video Course bundle.',
+          description: 'Our promise of quality and complete refund terms for the 2200+ Crochet Patterns and Video Course bundle.',
           updated: 'January 2026'
         };
       case 'shipping':
@@ -216,7 +216,7 @@ export function PolicyPage({ policy, onNavigate, onOpenCheckout }: PolicyPagePro
                     1. Information We Collect
                   </h2>
                   <p className="mb-3">
-                    When you purchase the <strong>Crochet Making Course and 1200+ Crochet Patterns Bundle</strong> from Crova, we collect essential contact details to deliver your digital access and provide support:
+                    When you purchase the <strong>Crochet Making Course and 2200+ Crochet Patterns Bundle</strong> from Crova, we collect essential contact details to deliver your digital access and provide support:
                   </p>
                   <ul className="list-disc pl-5 space-y-1.5 text-stone-600">
                     <li><strong>Contact Details:</strong> Your full name, email address, and WhatsApp/mobile phone number for instant digital access delivery and support tickets.</li>
@@ -275,7 +275,7 @@ export function PolicyPage({ policy, onNavigate, onOpenCheckout }: PolicyPagePro
                     5. User Rights &amp; Data Deletion
                   </h2>
                   <p>
-                    You retain complete authority over your personal information. If you wish to inspect your order logs, update your registered email address, or request permanent deletion of your data from our messaging systems, simply contact our Data Protection Officer at <span className="font-bold text-stone-900">facctymann@gmail.com</span> or message our WhatsApp desk (+91 8871694891).
+                    You retain complete authority over your personal information. If you wish to inspect your order logs, update your registered email address, or request permanent deletion of your data from our messaging systems, simply contact our Data Protection Officer at <span className="font-bold text-stone-900">support.crova@gmail.com</span> or message our WhatsApp desk (+91 8871694891).
                   </p>
                 </div>
               </div>
@@ -399,7 +399,7 @@ export function PolicyPage({ policy, onNavigate, onOpenCheckout }: PolicyPagePro
                   </h2>
                   <ol className="list-decimal pl-5 space-y-2 text-stone-600">
                     <li>
-                      <strong>Send Message / Email:</strong> Contact us via WhatsApp (+91 8871694891) or email (<span className="text-stone-900 font-bold">facctymann@gmail.com</span>) with your Order ID or phone number.
+                      <strong>Send Message / Email:</strong> Contact us via WhatsApp (+91 8871694891) or email (<span className="text-stone-900 font-bold">support.crova@gmail.com</span>) with your Order ID or phone number.
                     </li>
                     <li>
                       <strong>Rapid Review:</strong> Our customer support desk verifies the transaction and approves eligible refunds within 12 to 24 hours.
@@ -444,7 +444,7 @@ export function PolicyPage({ policy, onNavigate, onOpenCheckout }: PolicyPagePro
                   </p>
                   <ul className="list-disc pl-5 space-y-2 text-stone-600">
                     <li>
-                      <strong>On-Screen Dashboard:</strong> Your browser automatically redirects to the high-speed download center containing all 1200+ Patterns, Video Courses, Stitch Guides, and Planners.
+                      <strong>On-Screen Dashboard:</strong> Your browser automatically redirects to the high-speed download center containing all 2200+ Patterns, Video Courses, Stitch Guides, and Planners.
                     </li>
                     <li>
                       <strong>Automated Email Dispatch:</strong> A permanent access link and receipt are simultaneously dispatched to the email address entered during checkout.
@@ -536,7 +536,7 @@ export function PolicyPage({ policy, onNavigate, onOpenCheckout }: PolicyPagePro
                         For invoicing, institutional access, bulk orders, and formal payment verification inquiries.
                       </p>
                       <p className="text-xs sm:text-sm font-bold text-amber-900 mt-3 break-all">
-                        facctymann@gmail.com
+                        support.crova@gmail.com
                       </p>
                       <p className="text-xs text-stone-500 mt-1 flex items-center gap-1.5">
                         <Clock className="w-3.5 h-3.5 text-amber-600" />
@@ -544,7 +544,7 @@ export function PolicyPage({ policy, onNavigate, onOpenCheckout }: PolicyPagePro
                       </p>
                     </div>
                     <a
-                      href="mailto:facctymann@gmail.com?subject=Inquiry%20Regarding%20Crova%20Crochet%20Bundle"
+                      href="mailto:support.crova@gmail.com?subject=Inquiry%20Regarding%20Crova%20Crochet%20Bundle"
                       className="mt-4 bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs sm:text-sm py-2.5 px-4 rounded-xl inline-flex items-center justify-center gap-2 transition-colors cursor-pointer"
                     >
                       <span>Send Direct Email</span>
@@ -586,7 +586,7 @@ export function PolicyPage({ policy, onNavigate, onOpenCheckout }: PolicyPagePro
                 Ready to Start Your Crochet Journey?
               </h3>
               <p className="text-xs sm:text-sm text-stone-300 max-w-xl">
-                Get instant lifetime access to 1200+ Crochet Patterns, Video Course in English &amp; Hindi, 30 New Stitches, and 6 Free Bonuses today for just <strong className="text-emerald-300 font-black">₹199</strong> (Regular ₹3,999).
+                Get instant lifetime access to 2200+ Crochet Patterns, Video Course in English &amp; Hindi, 30 New Stitches, and 6 Free Bonuses today for just <strong className="text-emerald-300 font-black">₹199</strong> (Regular ₹3,999).
               </p>
             </div>
 
