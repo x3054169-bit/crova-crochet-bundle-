@@ -101,6 +101,43 @@ export default function App() {
     };
   }, []);
 
+  // Security & protection: disable right-click context menu and inspect shortcuts (Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C, F12, Ctrl+U)
+  useEffect(() => {
+    const handleContextMenu = (e: MouseEvent) => {
+      e.preventDefault();
+      return false;
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Prevent F12
+      if (e.key === 'F12' || e.keyCode === 123) {
+        e.preventDefault();
+        return false;
+      }
+      // Prevent Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C (or Cmd on Mac)
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey) {
+        const key = e.key.toUpperCase();
+        if (key === 'I' || key === 'J' || key === 'C') {
+          e.preventDefault();
+          return false;
+        }
+      }
+      // Prevent Ctrl+U (View Source)
+      if ((e.ctrlKey || e.metaKey) && (e.key === 'u' || e.key === 'U')) {
+        e.preventDefault();
+        return false;
+      }
+    };
+
+    document.addEventListener('contextmenu', handleContextMenu);
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('contextmenu', handleContextMenu);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
   // Isolated route for the 2200+ Crochet Offer
   if (activeOffer === '2200') {
     return <Offer2200Placeholder onSwitchOffer={handleSwitchOffer} />;

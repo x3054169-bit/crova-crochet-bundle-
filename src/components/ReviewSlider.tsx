@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, ChevronRight, Check } from 'lucide-react';
+import { useState, useEffect, useRef, TouchEvent } from 'react';
+import { ChevronLeft, ChevronRight, Check, Star } from 'lucide-react';
 
 export interface CustomerReview {
   id: string;
@@ -9,6 +9,7 @@ export interface CustomerReview {
   projectImage: string;
   projectAlt: string;
   handle: string;
+  craftedItem: string;
 }
 
 const CUSTOMER_REVIEWS: CustomerReview[] = [
@@ -19,7 +20,8 @@ const CUSTOMER_REVIEWS: CustomerReview[] = [
     review: 'I bought this bundle to make handmade gifts for my friends and family. The step-by-step videos made it so easy!',
     projectImage: 'https://i.ibb.co/LdYKW9Gh/kiara.webp',
     projectAlt: 'Kiara handmade crochet project',
-    handle: 'crova_crochet',
+    handle: 'crova.co',
+    craftedItem: 'Festive Gift Set',
   },
   {
     id: 'rev-2',
@@ -28,7 +30,8 @@ const CUSTOMER_REVIEWS: CustomerReview[] = [
     review: 'The amigurumi patterns are so adorable! As a complete beginner, I crocheted 3 plushies in my very first week.',
     projectImage: 'https://i.ibb.co/fdCd72jw/ananya.jpg',
     projectAlt: 'Ananya handmade crochet plushie',
-    handle: 'crova_crochet',
+    handle: 'crova.co',
+    craftedItem: '3 Amigurumi Plushies',
   },
   {
     id: 'rev-3',
@@ -37,7 +40,8 @@ const CUSTOMER_REVIEWS: CustomerReview[] = [
     review: 'Started selling handmade tote bags and coasters on Instagram using these patterns. Best ₹199 investment ever!',
     projectImage: 'https://i.ibb.co/3yC2jGmw/pooja.jpg',
     projectAlt: 'Pooja handmade crochet craft',
-    handle: 'crova_crochet',
+    handle: 'crova.co',
+    craftedItem: 'Tote & Coaster Sets',
   },
   {
     id: 'rev-4',
@@ -46,7 +50,8 @@ const CUSTOMER_REVIEWS: CustomerReview[] = [
     review: 'The Hindi and English video masterclass cleared all my confusion with the magic circle and stitch tension.',
     projectImage: 'https://i.ibb.co/C3Q6V7hL/sneha.jpg',
     projectAlt: 'Sneha handmade crochet craft',
-    handle: 'crova_crochet',
+    handle: 'crova.co',
+    craftedItem: 'First Magic Loop Blanket',
   },
   {
     id: 'rev-5',
@@ -55,7 +60,8 @@ const CUSTOMER_REVIEWS: CustomerReview[] = [
     review: 'The festival and home decor patterns are massive! Instant download access worked within seconds of payment.',
     projectImage: 'https://i.ibb.co/nqsXsyWS/meena.jpg',
     projectAlt: 'Meena handmade crochet home decor',
-    handle: 'crova_crochet',
+    handle: 'crova.co',
+    craftedItem: 'Festival Wall Decor',
   },
   {
     id: 'rev-6',
@@ -64,149 +70,171 @@ const CUSTOMER_REVIEWS: CustomerReview[] = [
     review: 'Detailed PDF charts with clear stitch counts. Crocheting baby booties and blankets has become my favorite hobby!',
     projectImage: 'https://i.ibb.co/V09DcfQg/ananya-review.avif',
     projectAlt: 'Ananya R. customer crochet review',
-    handle: 'crova_crochet',
+    handle: 'crova.co',
+    craftedItem: 'Baby Booties & Blanket',
   },
 ];
 
 export function ReviewSlider() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [isFading, setIsFading] = useState(false);
   const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Touch swipe support
+  const touchStartXRef = useRef<number | null>(null);
+
+  const goToSlide = (newIndex: number) => {
+    if (newIndex === currentIndex) return;
+    setIsFading(true);
+    setTimeout(() => {
+      setCurrentIndex(newIndex);
+      setIsFading(false);
+    }, 180);
+  };
+
   const prevSlide = () => {
-    setCurrentIndex((prev) => (prev === 0 ? CUSTOMER_REVIEWS.length - 1 : prev - 1));
+    const nextIdx = currentIndex === 0 ? CUSTOMER_REVIEWS.length - 1 : currentIndex - 1;
+    goToSlide(nextIdx);
   };
 
   const nextSlide = () => {
-    setCurrentIndex((prev) => (prev === CUSTOMER_REVIEWS.length - 1 ? 0 : prev + 1));
+    const nextIdx = currentIndex === CUSTOMER_REVIEWS.length - 1 ? 0 : currentIndex + 1;
+    goToSlide(nextIdx);
   };
 
   useEffect(() => {
     if (!isAutoPlaying) return;
     autoPlayRef.current = setInterval(() => {
       nextSlide();
-    }, 4500);
+    }, 5000);
 
     return () => {
       if (autoPlayRef.current) clearInterval(autoPlayRef.current);
     };
   }, [isAutoPlaying, currentIndex]);
 
+  const handleTouchStart = (e: TouchEvent) => {
+    touchStartXRef.current = e.touches[0].clientX;
+    setIsAutoPlaying(false);
+  };
+
+  const handleTouchEnd = (e: TouchEvent) => {
+    if (touchStartXRef.current !== null) {
+      const touchEndX = e.changedTouches[0].clientX;
+      const diff = touchStartXRef.current - touchEndX;
+      if (diff > 45) {
+        nextSlide();
+      } else if (diff < -45) {
+        prevSlide();
+      }
+    }
+    touchStartXRef.current = null;
+    setIsAutoPlaying(true);
+  };
+
   const current = CUSTOMER_REVIEWS[currentIndex];
 
   return (
     <section className="mt-10 mb-10 w-full text-left">
       <div className="text-center mb-4">
-        <span className="text-[11px] font-black uppercase tracking-wider text-[#00838f] bg-[#e0f7fa] px-3 py-1 rounded-full border border-[#00bcd4]/30">
+        <span className="text-[11px] font-black uppercase tracking-wider text-[#00838f] bg-[#e0f7fa] px-3 py-1 rounded-full border border-[#00bcd4]/30 shadow-2xs">
           Real Crafter Feedback
         </span>
         <h3 className="text-xl sm:text-2xl font-serif font-black text-stone-900 tracking-wide mt-2">
           Loved by 50,000+ Crafters
         </h3>
-        <p className="text-xs text-stone-500 mt-0.5">
-          See what our crafters are making and sharing on Instagram
-        </p>
       </div>
 
-      {/* Main Review Card Slider matching screenshot style */}
+      {/* Main Review Card Slider Container */}
       <div
-        className="relative"
+        className="relative select-none"
         onMouseEnter={() => setIsAutoPlaying(false)}
         onMouseLeave={() => setIsAutoPlaying(true)}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
       >
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#e0f7fa]/70 via-[#f0fdfa]/50 to-white border-2 border-[#80deea]/70 shadow-md p-4 sm:p-6 transition-all">
-          {/* Decorative Corner: Yarn Ball (Bottom-Left) */}
-          <div className="absolute -bottom-2 -left-2 w-16 h-16 pointer-events-none select-none z-10 opacity-90">
-            <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-xs">
-              <circle cx="45" cy="55" r="30" fill="#26c6da" />
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-white via-[#fafdfd] to-[#f0fbfb] border-2 border-[#80deea]/60 shadow-lg shadow-teal-900/5 p-4 sm:p-6 transition-all duration-300">
+          {/* Subtle Decorative Craft Watermarks in Corners (Non-obstructive) */}
+          <div className="absolute -top-3 -right-3 w-16 h-16 pointer-events-none select-none opacity-20">
+            <svg viewBox="0 0 100 100" className="w-full h-full">
+              <circle cx="50" cy="50" r="30" fill="#26c6da" />
               <path
-                d="M 25 45 Q 45 35 65 50 Q 55 70 35 65 Q 25 55 45 50"
+                d="M 30 40 Q 50 30 70 45 Q 60 65 40 60 Q 30 50 50 45"
                 fill="none"
                 stroke="#00838f"
                 strokeWidth="2.5"
                 strokeLinecap="round"
               />
-              <path
-                d="M 30 65 Q 50 60 60 40 Q 40 30 25 50"
-                fill="none"
-                stroke="#80deea"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-              {/* Wandering Yarn Thread */}
-              <path
-                d="M 68 62 C 80 75 90 70 105 85"
-                fill="none"
-                stroke="#00bcd4"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-              />
             </svg>
           </div>
 
-          {/* Decorative Corner: Crocheted Flower (Bottom-Right) */}
-          <div className="absolute -bottom-2 -right-2 w-16 h-16 pointer-events-none select-none z-10 opacity-95">
-            <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-sm">
-              {/* Cyan Petals */}
-              <circle cx="50" cy="22" r="14" fill="#26c6da" />
-              <circle cx="70" cy="30" r="14" fill="#26c6da" />
-              <circle cx="78" cy="50" r="14" fill="#26c6da" />
-              <circle cx="70" cy="70" r="14" fill="#26c6da" />
-              <circle cx="50" cy="78" r="14" fill="#26c6da" />
-              <circle cx="30" cy="70" r="14" fill="#26c6da" />
-              <circle cx="22" cy="50" r="14" fill="#26c6da" />
-              <circle cx="30" cy="30" r="14" fill="#26c6da" />
-              {/* White Inner Petals Ring */}
-              <circle cx="50" cy="50" r="22" fill="#ffffff" stroke="#b2ebf2" strokeWidth="1.5" />
-              {/* Yellow Button Center with Stitch Pattern */}
-              <circle cx="50" cy="50" r="11" fill="#fbc02d" />
-              <circle cx="50" cy="50" r="5" fill="#f57f17" />
+          <div className="absolute -bottom-3 -left-3 w-16 h-16 pointer-events-none select-none opacity-20">
+            <svg viewBox="0 0 100 100" className="w-full h-full">
+              <circle cx="50" cy="50" r="28" fill="#80deea" />
+              <circle cx="50" cy="50" r="14" fill="#ffffff" />
             </svg>
           </div>
 
-          {/* 2-Column Content Layout matching screenshot */}
-          <div className="grid grid-cols-12 gap-3 sm:gap-5 items-center relative z-20">
-            {/* Left Column: Customer Creation Photo */}
+          {/* 2-Column Content Layout with Smooth Transition */}
+          <div
+            className={`grid grid-cols-12 gap-3.5 sm:gap-5 items-center relative z-20 transition-all duration-200 ${
+              isFading ? 'opacity-30 scale-[0.99] blur-[0.5px]' : 'opacity-100 scale-100 blur-none'
+            }`}
+          >
+            {/* Left Column: Customer Creation Photo with Badge */}
             <div className="col-span-5 sm:col-span-5">
-              <div className="aspect-square rounded-2xl overflow-hidden bg-white border-2 border-white shadow-md ring-1 ring-stone-200">
+              <div className="relative aspect-square rounded-2xl overflow-hidden bg-white border-2 border-white shadow-md ring-1 ring-stone-200/80 group">
                 <img
                   src={current.projectImage}
                   alt={current.projectAlt}
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   loading="lazy"
                 />
+                {/* Mini Item Tag */}
+                <div className="absolute bottom-1.5 left-1.5 right-1.5 bg-stone-900/80 backdrop-blur-xs text-white text-[9px] sm:text-[10px] font-bold py-0.5 px-1.5 rounded-md text-center truncate shadow-xs">
+                  {current.craftedItem}
+                </div>
               </div>
             </div>
 
-            {/* Right Column: Quote, Name, Review, Divider & Social Proof */}
-            <div className="col-span-7 sm:col-span-7 flex flex-col justify-between pl-1">
+            {/* Right Column: Rating, Name, Review, Divider & Social Proof */}
+            <div className="col-span-7 sm:col-span-7 flex flex-col justify-between pl-0.5">
               <div>
-                {/* Top Quotation Mark */}
-                <div className="text-[#00838f] text-2xl sm:text-3xl font-serif font-black leading-none select-none">
-                  “
+                {/* Top Row: 5 Star Rating & Verified Crafter Tag */}
+                <div className="flex items-center justify-between gap-1 mb-1">
+                  <div className="flex items-center text-amber-400">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-3.5 h-3.5 fill-amber-400 stroke-amber-500" />
+                    ))}
+                  </div>
+                  <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-md border border-emerald-200/60 inline-flex items-center gap-0.5 shrink-0">
+                    <Check className="w-2.5 h-2.5 stroke-[3.5]" />
+                    <span>Verified</span>
+                  </span>
                 </div>
 
-                {/* Reviewer Name and Location in warm gold/amber */}
-                <h4 className="text-[#d97706] font-bold text-sm sm:text-base font-sans tracking-tight mt-0.5">
-                  {current.name}, {current.location}
-                </h4>
+                {/* Reviewer Name and Location */}
+                <div className="flex items-baseline gap-1.5 flex-wrap">
+                  <h4 className="text-stone-950 font-black text-sm sm:text-base font-sans tracking-tight">
+                    {current.name}
+                  </h4>
+                  <span className="text-[11px] font-bold text-[#c2410c]">
+                    • {current.location}
+                  </span>
+                </div>
 
                 {/* Review Paragraph */}
-                <p className="text-stone-800 text-[11px] sm:text-xs font-semibold leading-relaxed my-1 sm:my-1.5 font-sans">
-                  {current.review}
+                <p className="text-stone-800 text-xs sm:text-[13px] font-medium leading-snug sm:leading-relaxed my-1.5 font-sans">
+                  &ldquo;{current.review}&rdquo;
                 </p>
-
-                {/* Bottom Quotation Mark */}
-                <div className="text-[#00838f] text-2xl sm:text-3xl font-serif font-black leading-none text-right select-none -mt-2">
-                  ”
-                </div>
               </div>
 
-              {/* Heart Divider Line */}
-              <div className="flex items-center gap-1.5 justify-center my-1.5 text-[#00bcd4]">
-                <div className="h-[1.5px] bg-[#4dd0e1] flex-1 rounded-full" />
+              {/* Heart Accent Divider Line */}
+              <div className="flex items-center gap-2 justify-center my-1 text-[#00bcd4]">
+                <div className="h-px bg-cyan-200 flex-1 rounded-full" />
                 <span className="text-[10px] leading-none text-[#00838f] select-none">♥</span>
-                <div className="h-[1.5px] bg-[#4dd0e1] flex-1 rounded-full" />
+                <div className="h-px bg-cyan-200 flex-1 rounded-full" />
               </div>
 
               {/* Social Proof Handle matching screenshot */}
@@ -220,12 +248,12 @@ export function ReviewSlider() {
                   </svg>
                 </div>
 
-                <span className="text-xs font-bold text-stone-900 tracking-tight">
-                  {current.handle}
+                <span className="text-xs font-bold text-stone-900 tracking-tight truncate">
+                  @{current.handle}
                 </span>
 
                 {/* Verified Blue Checkmark Badge */}
-                <span className="w-3.5 h-3.5 rounded-full bg-[#00bcd4] text-white flex items-center justify-center shadow-2xs shrink-0">
+                <span className="w-3.5 h-3.5 rounded-full bg-[#00bcd4] text-white flex items-center justify-center shadow-2xs shrink-0" title="Verified Instagram Crafter">
                   <Check className="w-2.5 h-2.5 stroke-[3.5]" />
                 </span>
               </div>
@@ -239,22 +267,22 @@ export function ReviewSlider() {
             type="button"
             onClick={prevSlide}
             aria-label="Previous review"
-            className="w-8 h-8 rounded-full bg-white border border-stone-200 text-stone-700 hover:text-[#00838f] hover:border-[#00bcd4] flex items-center justify-center shadow-xs transition-all cursor-pointer"
+            className="w-8 h-8 rounded-full bg-white border border-stone-200 text-stone-700 hover:text-[#00838f] hover:border-[#00bcd4] active:scale-95 flex items-center justify-center shadow-xs transition-all cursor-pointer"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
 
-          {/* Dots Indicator */}
+          {/* Dots Indicator with slide numbers */}
           <div className="flex items-center gap-1.5">
             {CUSTOMER_REVIEWS.map((_, i) => (
               <button
                 key={i}
                 type="button"
-                onClick={() => setCurrentIndex(i)}
+                onClick={() => goToSlide(i)}
                 aria-label={`Go to review ${i + 1}`}
-                className={`h-2 rounded-full transition-all cursor-pointer ${
+                className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
                   currentIndex === i
-                    ? 'w-6 bg-[#00acc1]'
+                    ? 'w-6 bg-[#00838f]'
                     : 'w-2 bg-stone-300 hover:bg-stone-400'
                 }`}
               />
@@ -265,11 +293,16 @@ export function ReviewSlider() {
             type="button"
             onClick={nextSlide}
             aria-label="Next review"
-            className="w-8 h-8 rounded-full bg-white border border-stone-200 text-stone-700 hover:text-[#00838f] hover:border-[#00bcd4] flex items-center justify-center shadow-xs transition-all cursor-pointer"
+            className="w-8 h-8 rounded-full bg-white border border-stone-200 text-stone-700 hover:text-[#00838f] hover:border-[#00bcd4] active:scale-95 flex items-center justify-center shadow-xs transition-all cursor-pointer"
           >
             <ChevronRight className="w-4 h-4" />
           </button>
         </div>
+
+        {/* Subtle swipe hint for mobile */}
+        <p className="text-[10px] text-stone-400 text-center font-medium mt-1 select-none">
+          Swipe or tap dots to view all {CUSTOMER_REVIEWS.length} crafter stories
+        </p>
       </div>
     </section>
   );

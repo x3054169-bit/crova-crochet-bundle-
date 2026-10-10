@@ -37,9 +37,9 @@ export function BonusesSection({ onOpenCheckout }: BonusesSectionProps) {
   const format2 = (n: number) => n.toString().padStart(2, '0');
 
   return (
-    <section className="py-6 sm:py-8 px-4 sm:px-6 max-w-5xl mx-auto">
+    <section className="py-5 sm:py-8 px-2.5 sm:px-6 max-w-5xl mx-auto">
       {/* 6 Bonus Cards in 2-col (mobile) and 3-col (desktop) matching Screenshot 3 */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-3.5 sm:gap-6 mb-8 sm:mb-10">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-2.5 sm:gap-6 mb-7 sm:mb-10">
         {BONUSES.map((bonus, idx) => {
           // Alternating warm cream and soft mint background colors matching Screenshot 3
           const isMint = idx % 2 === 1;

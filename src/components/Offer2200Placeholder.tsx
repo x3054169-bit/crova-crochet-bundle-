@@ -623,7 +623,7 @@ export function Offer2200Placeholder(_props: Offer2200PlaceholderProps = {}) {
       </header>
 
       {/* Main Container */}
-      <section className="w-full px-4 pt-6 pb-8 max-w-md mx-auto text-center">
+      <section className="w-full px-2.5 sm:px-4 pt-5 pb-8 max-w-lg sm:max-w-xl mx-auto text-center">
         {/* Top Eyebrow Headings */}
         <div className="mb-5">
           <p className="text-[#dc2626] font-extrabold text-center text-xs sm:text-sm uppercase tracking-wider">
@@ -1053,7 +1053,7 @@ export function Offer2200Placeholder(_props: Offer2200PlaceholderProps = {}) {
               <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
                 <Check className="w-3.5 h-3.5 stroke-[3]" />
               </span>
-              <span>Plus 9 Exclusive Free Bonuses</span>
+              <span>6 Exclusive Free Bonuses</span>
             </li>
           </ul>
 

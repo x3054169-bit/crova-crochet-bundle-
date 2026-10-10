@@ -21,16 +21,16 @@ export function WhatYouReceive({ onOpenCheckout }: WhatYouReceiveProps) {
   ];
 
   return (
-    <section className="py-6 px-4 sm:px-6 max-w-5xl mx-auto">
+    <section className="py-5 sm:py-6 px-2.5 sm:px-6 max-w-5xl mx-auto">
       {/* 1. Header matching Screenshot 2: "What Will I Receive" (I Receive in red) */}
-      <div className="text-center mb-6">
-        <h2 className="text-base sm:text-lg font-bold text-stone-900 tracking-normal">
+      <div className="text-center mb-5 sm:mb-6">
+        <h2 className="text-lg sm:text-xl font-bold text-stone-900 tracking-normal">
           What Will <span className="text-[#b91c1c]">I Receive</span>
         </h2>
       </div>
 
       {/* 2. Main Content Card Box from Screenshot 2 */}
-      <div className="bg-white rounded-2xl border border-stone-200/90 shadow-xl p-6 sm:p-8 md:p-10 max-w-4xl mx-auto">
+      <div className="bg-white rounded-2xl border border-stone-200/90 shadow-xl p-4 sm:p-8 md:p-10 max-w-4xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
           {/* Left Column: Detailed Items List & Orange Buy Now Button */}
           <div className="md:col-span-6 flex flex-col justify-between h-full">

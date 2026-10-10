@@ -8,30 +8,30 @@ interface HeroSectionProps {
 
 export function HeroSection({ onOpenCheckout, onOpenPreview }: HeroSectionProps) {
   return (
-    <section className="pt-2 sm:pt-4 pb-4 px-4 sm:px-6 max-w-5xl mx-auto text-center">
+    <section className="pt-2 sm:pt-4 pb-4 px-2.5 sm:px-6 max-w-5xl mx-auto text-center">
       {/* 1. Orange-Red Uppercase Eyebrow from Screenshot 1 */}
       <div className="mb-2">
-        <span className="text-xs sm:text-sm font-extrabold tracking-wide uppercase text-[#ff5500]">
+        <span className="text-[11px] sm:text-sm font-extrabold tracking-wide uppercase text-[#ff5500]">
           CROCHET MAKING COURSE AND 1200+ CROCHET PATTERNS BUNDLE
         </span>
       </div>
 
       {/* 2. Main Title */}
-      <h1 className="text-3xl sm:text-4xl md:text-[44px] font-black text-stone-900 tracking-tight leading-tight max-w-3xl mx-auto mb-4 font-sans">
+      <h1 className="text-3xl sm:text-4xl md:text-[44px] font-black text-stone-900 tracking-tight leading-tight max-w-3xl mx-auto mb-3.5 font-sans">
         The Ultimate Premium Crochet Bundle!
       </h1>
 
       {/* 3. Dashed Border Social Proof Box from Screenshot 1 */}
-      <div className="inline-block mb-6 sm:mb-8 w-full max-w-2xl">
-        <div className="border-2 border-dashed border-stone-400/90 rounded-md py-2 px-6 sm:px-10 bg-transparent">
-          <span className="text-sm sm:text-lg font-bold text-[#ff5500] tracking-wide">
+      <div className="inline-block mb-4 sm:mb-8 w-full max-w-2xl px-1">
+        <div className="border-2 border-dashed border-stone-400/90 rounded-md py-2 px-3 sm:px-10 bg-transparent">
+          <span className="text-base sm:text-lg font-bold text-[#ff5500] tracking-wide">
             Loved by 15,000+ Crafters!
           </span>
         </div>
       </div>
 
       {/* 4. Warm Peach Hero Offer Card Box matching Screenshot 1 */}
-      <div className="bg-[#fff8f2] rounded-2xl border border-stone-200/90 shadow-lg p-5 sm:p-8 md:p-10 max-w-4xl mx-auto text-left">
+      <div className="bg-[#fff8f2] rounded-2xl border border-stone-200/90 shadow-lg p-3.5 sm:p-8 md:p-10 max-w-4xl mx-auto text-left">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-center">
           {/* Left Column: Woven Basket with Yarn Balls, Hooks & 3D Book */}
           <div className="md:col-span-6 flex flex-col items-center justify-center py-2">
@@ -54,7 +54,7 @@ export function HeroSection({ onOpenCheckout, onOpenPreview }: HeroSectionProps)
           </div>
 
           {/* Right Column: Pricing, Trustscore, Bullets, Large CTA */}
-          <div className="md:col-span-6 flex flex-col justify-center">
+          <div className="md:col-span-6 flex flex-col justify-center mt-2 sm:mt-0">
             {/* Price block: Rs. 199.00 Rs. 3999.00/- */}
             <div className="flex flex-wrap items-baseline gap-2.5 mb-2">
               <span className="text-3xl sm:text-4xl font-black text-[#b91c1c] tracking-tight">

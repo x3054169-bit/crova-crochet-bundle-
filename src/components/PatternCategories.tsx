@@ -11,10 +11,10 @@ export function PatternCategories() {
   const holidayCategory = PATTERN_CATEGORIES[6]; // 100 Holidays & Festivals Patterns
 
   return (
-    <section className="py-10 px-4 sm:px-6 max-w-6xl mx-auto">
+    <section className="py-8 sm:py-10 px-2.5 sm:px-6 max-w-6xl mx-auto">
       {/* Red & Dark Section Title matching Screenshot 1 */}
-      <div className="text-center mb-8 sm:mb-10">
-        <h2 className="text-xl sm:text-2xl md:text-3xl font-black tracking-tight">
+      <div className="text-center mb-6 sm:mb-10">
+        <h2 className="text-2xl sm:text-3xl md:text-3xl font-black tracking-tight">
           <span className="text-[#d32f2f]">Included in the </span>
           <span className="text-stone-950 font-black">1200+ Crochet Patterns</span>
         </h2>
