@@ -23,7 +23,6 @@ import { PolicyPage } from './components/PolicyPage';
 import { BackToTop } from './components/BackToTop';
 import { BUY_NOW_URL } from './data/bundleData';
 import { Offer2200Placeholder } from './components/Offer2200Placeholder';
-import { PageSwitcherBar } from './components/PageSwitcherBar';
 
 const resolveInitialOffer = (): '2200' | '1000' => {
   if (typeof window === 'undefined') return '2200';
@@ -178,12 +177,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#f7f5f2] text-stone-800 flex flex-col font-sans">
-      {/* Top Universal Page Switcher Bar */}
-      <PageSwitcherBar 
-        currentOffer="1000" 
-        onSwitch={handleSwitchOffer} 
-      />
-
       {/* 1. Top Offer Countdown Bar & Crova WordPress Navbar */}
       <HeaderBar 
         onOpenCheckout={handleOpenCheckout} 
