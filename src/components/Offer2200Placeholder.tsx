@@ -501,7 +501,10 @@ export function Offer2200Placeholder(_props: Offer2200PlaceholderProps = {}) {
     return () => clearInterval(timer);
   }, []);
 
-  const handleCheckoutClick = () => {
+  const handleCheckoutClick = (customUrl?: unknown, customValue: number = 199, coupon?: string) => {
+    const validUrl = typeof customUrl === 'string' && customUrl.startsWith('http') ? customUrl : OFFER_2200_CONFIG.checkoutUrl;
+    const finalValue = typeof customValue === 'number' && !isNaN(customValue) ? customValue : 199;
+
     try {
       if (typeof window !== 'undefined') {
         const win = window as unknown as { dataLayer?: Record<string, unknown>[]; fbq?: (...args: unknown[]) => void };
@@ -509,17 +512,18 @@ export function Offer2200Placeholder(_props: Offer2200PlaceholderProps = {}) {
           win.dataLayer.push({
             event: 'InitiateCheckout',
             content_id: OFFER_2200_CONFIG.contentId,
-            content_name: OFFER_2200_CONFIG.contentName,
+            content_name: coupon ? `${OFFER_2200_CONFIG.contentName} (${coupon} Applied)` : OFFER_2200_CONFIG.contentName,
             currency: 'INR',
-            value: 199,
+            value: finalValue,
+            coupon: coupon || undefined,
           });
         }
         if (win.fbq) {
           win.fbq('track', 'InitiateCheckout', {
             content_id: OFFER_2200_CONFIG.contentId,
-            content_name: OFFER_2200_CONFIG.contentName,
+            content_name: coupon ? `${OFFER_2200_CONFIG.contentName} (${coupon} Applied)` : OFFER_2200_CONFIG.contentName,
             currency: 'INR',
-            value: 199,
+            value: finalValue,
           });
         }
       }
@@ -527,7 +531,7 @@ export function Offer2200Placeholder(_props: Offer2200PlaceholderProps = {}) {
       // Ignore analytics tracking errors
     }
 
-    window.location.href = OFFER_2200_CONFIG.checkoutUrl;
+    window.location.href = validUrl;
   };
 
   const formatDigit = (num: number) => num.toString().padStart(2, '0');

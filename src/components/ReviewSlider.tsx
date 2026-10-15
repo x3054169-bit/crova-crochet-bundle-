@@ -137,13 +137,17 @@ export function ReviewSlider() {
 
   return (
     <section className="mt-10 mb-10 w-full text-left">
-      <div className="text-center mb-4">
-        <span className="text-[11px] font-black uppercase tracking-wider text-[#00838f] bg-[#e0f7fa] px-3 py-1 rounded-full border border-[#00bcd4]/30 shadow-2xs">
-          Real Crafter Feedback
-        </span>
-        <h3 className="text-xl sm:text-2xl font-serif font-black text-stone-900 tracking-wide mt-2">
-          Loved by 50,000+ Crafters
+      <div className="text-center mb-5">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-200/80 text-amber-900 text-xs font-bold mb-2 shadow-2xs">
+          <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
+          <span>REAL CRAFTER EXPERIENCES</span>
+        </div>
+        <h3 className="text-xl sm:text-2xl font-serif font-black text-stone-900 tracking-tight">
+          Loved by 14,000+ Crafters
         </h3>
+        <p className="text-xs text-stone-500 mt-1">
+          Real reviews and finished projects from crafters across India
+        </p>
       </div>
 
       {/* Main Review Card Slider Container */}
@@ -154,28 +158,7 @@ export function ReviewSlider() {
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-white via-[#fafdfd] to-[#f0fbfb] border-2 border-[#80deea]/60 shadow-lg shadow-teal-900/5 p-4 sm:p-6 transition-all duration-300">
-          {/* Subtle Decorative Craft Watermarks in Corners (Non-obstructive) */}
-          <div className="absolute -top-3 -right-3 w-16 h-16 pointer-events-none select-none opacity-20">
-            <svg viewBox="0 0 100 100" className="w-full h-full">
-              <circle cx="50" cy="50" r="30" fill="#26c6da" />
-              <path
-                d="M 30 40 Q 50 30 70 45 Q 60 65 40 60 Q 30 50 50 45"
-                fill="none"
-                stroke="#00838f"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-              />
-            </svg>
-          </div>
-
-          <div className="absolute -bottom-3 -left-3 w-16 h-16 pointer-events-none select-none opacity-20">
-            <svg viewBox="0 0 100 100" className="w-full h-full">
-              <circle cx="50" cy="50" r="28" fill="#80deea" />
-              <circle cx="50" cy="50" r="14" fill="#ffffff" />
-            </svg>
-          </div>
-
+        <div className="relative overflow-hidden rounded-3xl bg-white border border-stone-200/90 shadow-md p-4 sm:p-6 transition-all duration-300">
           {/* 2-Column Content Layout with Smooth Transition */}
           <div
             className={`grid grid-cols-12 gap-3.5 sm:gap-5 items-center relative z-20 transition-all duration-200 ${
@@ -184,7 +167,7 @@ export function ReviewSlider() {
           >
             {/* Left Column: Customer Creation Photo with Badge */}
             <div className="col-span-5 sm:col-span-5">
-              <div className="relative aspect-square rounded-2xl overflow-hidden bg-white border-2 border-white shadow-md ring-1 ring-stone-200/80 group">
+              <div className="relative aspect-square rounded-2xl overflow-hidden bg-white border border-stone-200/80 shadow-xs ring-1 ring-stone-200/60 group">
                 <img
                   src={current.projectImage}
                   alt={current.projectAlt}
@@ -192,7 +175,7 @@ export function ReviewSlider() {
                   loading="lazy"
                 />
                 {/* Mini Item Tag */}
-                <div className="absolute bottom-1.5 left-1.5 right-1.5 bg-stone-900/80 backdrop-blur-xs text-white text-[9px] sm:text-[10px] font-bold py-0.5 px-1.5 rounded-md text-center truncate shadow-xs">
+                <div className="absolute bottom-1.5 left-1.5 right-1.5 bg-stone-900/85 backdrop-blur-xs text-white text-[9px] sm:text-[10px] font-bold py-0.5 px-1.5 rounded-md text-center truncate shadow-xs">
                   {current.craftedItem}
                 </div>
               </div>
@@ -230,11 +213,11 @@ export function ReviewSlider() {
                 </p>
               </div>
 
-              {/* Heart Accent Divider Line */}
-              <div className="flex items-center gap-2 justify-center my-1 text-[#00bcd4]">
-                <div className="h-px bg-cyan-200 flex-1 rounded-full" />
-                <span className="text-[10px] leading-none text-[#00838f] select-none">♥</span>
-                <div className="h-px bg-cyan-200 flex-1 rounded-full" />
+              {/* Artisan Divider Line */}
+              <div className="flex items-center gap-2 justify-center my-1 text-amber-600">
+                <div className="h-px bg-stone-200 flex-1 rounded-full" />
+                <span className="text-[10px] leading-none text-amber-700 select-none">♥</span>
+                <div className="h-px bg-stone-200 flex-1 rounded-full" />
               </div>
 
               {/* Social Proof Handle matching screenshot */}
@@ -253,7 +236,7 @@ export function ReviewSlider() {
                 </span>
 
                 {/* Verified Blue Checkmark Badge */}
-                <span className="w-3.5 h-3.5 rounded-full bg-[#00bcd4] text-white flex items-center justify-center shadow-2xs shrink-0" title="Verified Instagram Crafter">
+                <span className="w-3.5 h-3.5 rounded-full bg-blue-500 text-white flex items-center justify-center shadow-2xs shrink-0" title="Verified Instagram Crafter">
                   <Check className="w-2.5 h-2.5 stroke-[3.5]" />
                 </span>
               </div>
@@ -267,7 +250,7 @@ export function ReviewSlider() {
             type="button"
             onClick={prevSlide}
             aria-label="Previous review"
-            className="w-8 h-8 rounded-full bg-white border border-stone-200 text-stone-700 hover:text-[#00838f] hover:border-[#00bcd4] active:scale-95 flex items-center justify-center shadow-xs transition-all cursor-pointer"
+            className="w-8 h-8 rounded-full bg-white border border-stone-200 text-stone-700 hover:text-[#ea580c] hover:border-[#ea580c] active:scale-95 flex items-center justify-center shadow-xs transition-all cursor-pointer"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>

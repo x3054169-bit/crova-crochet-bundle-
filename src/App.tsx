@@ -8,6 +8,7 @@ import { Offer2200Placeholder } from './components/Offer2200Placeholder';
 import { PolicyPage } from './components/PolicyPage';
 import { PolicyType } from './components/PolicyModal';
 import { ScrollProgressBar } from './components/ScrollProgressBar';
+import { ExitIntentModal } from './components/ExitIntentModal';
 import { BackToTop } from './components/BackToTop';
 import { OFFER_2200_CONFIG } from './data/offer2200';
 
@@ -96,6 +97,14 @@ export default function App() {
           policy={currentView} 
           onNavigate={handleNavigate} 
           onOpenCheckout={handleOpenCheckout} 
+        />
+        <ExitIntentModal
+          discountCode="SAVE10"
+          discountPercent={10}
+          originalPrice={199}
+          discountedPrice={179}
+          checkoutUrl={OFFER_2200_CONFIG.checkoutUrl}
+          onOpenCheckout={handleOpenCheckout}
         />
         <BackToTop />
       </div>

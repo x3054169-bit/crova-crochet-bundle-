@@ -30,7 +30,7 @@ export function BackToTop() {
 
   return (
     <div
-      className={`fixed bottom-20 sm:bottom-6 right-4 sm:right-6 z-40 flex flex-col items-end group transition-all duration-300 ${
+      className={`fixed bottom-44 sm:bottom-32 right-4 sm:right-6 z-40 flex flex-col items-end group transition-all duration-300 ${
         isVisible
           ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto'
           : 'opacity-0 translate-y-4 scale-75 pointer-events-none'

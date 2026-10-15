@@ -1,4 +1,5 @@
 import { Check, X, Sparkles, CheckCircle2, XCircle, ArrowRight } from 'lucide-react';
+import { OFFER_2200_CONFIG } from '../data/offer2200';
 
 interface ComparisonFeature {
   name: string;
@@ -129,7 +130,7 @@ interface ComparisonTableProps {
 
 export function ComparisonTable({
   onOpenCheckout,
-  checkoutUrl = 'https://superprofile.bio/vp/673db2fecae0ea0013b5bfec',
+  checkoutUrl = OFFER_2200_CONFIG.checkoutUrl,
   className = '',
 }: ComparisonTableProps) {
   return (
