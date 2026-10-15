@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, ShieldCheck, FileText, RotateCcw, Truck, Mail, Send, CheckCircle2, Phone, Clock, ExternalLink } from 'lucide-react';
+import { X, ShieldCheck, FileText, RotateCcw, Truck, Mail, CheckCircle2, Phone, Clock, ExternalLink } from 'lucide-react';
 
 export type PolicyType = 'privacy' | 'terms' | 'refund' | 'shipping' | 'contact';
 
@@ -20,13 +20,6 @@ export function PolicyModal({ isOpen, initialPolicy = 'privacy', offerType = '22
   const bonusCount = is2200 ? '9 Exclusive Artisan Bonuses' : '6 Bonus materials';
   const [activeTab, setActiveTab] = useState<PolicyType>(initialPolicy);
 
-  // Contact form state
-  const [contactName, setContactName] = useState('');
-  const [contactEmail, setContactEmail] = useState('');
-  const [contactOrder, setContactOrder] = useState('');
-  const [contactMessage, setContactMessage] = useState('');
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
   // Update tab if initialPolicy changes
   React.useEffect(() => {
     if (initialPolicy) {
@@ -35,12 +28,6 @@ export function PolicyModal({ isOpen, initialPolicy = 'privacy', offerType = '22
   }, [initialPolicy]);
 
   if (!isOpen) return null;
-
-  const handleContactSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!contactEmail.trim() || !contactMessage.trim()) return;
-    setIsSubmitted(true);
-  };
 
   const tabs: { id: PolicyType; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
     { id: 'privacy', label: 'Privacy Policy', icon: ShieldCheck },
@@ -86,7 +73,6 @@ export function PolicyModal({ isOpen, initialPolicy = 'privacy', offerType = '22
                 key={tab.id}
                 onClick={() => {
                   setActiveTab(tab.id);
-                  setIsSubmitted(false);
                 }}
                 className={`px-3 py-2 rounded-lg text-xs sm:text-sm font-bold flex items-center gap-1.5 whitespace-nowrap transition-all cursor-pointer ${
                   isActive
@@ -296,113 +282,68 @@ export function PolicyModal({ isOpen, initialPolicy = 'privacy', offerType = '22
 
               {/* Direct channels grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center shrink-0">
-                    <Phone className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-stone-900 text-sm">WhatsApp Fast Support</h4>
-                    <p className="text-xs text-stone-600 mt-0.5">+91 8871694891</p>
-                    <a 
-                      href="https://wa.me/918871694891?text=Hi!%20I%20need%20assistance%20with%20the%20Crova%20Crochet%20Bundle."
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 hover:text-emerald-800 mt-2"
-                    >
-                      <span>Open WhatsApp Chat</span>
-                      <ExternalLink className="w-3 h-3" />
-                    </a>
-                  </div>
-                </div>
-
-                <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-full bg-amber-600 text-white flex items-center justify-center shrink-0">
-                    <Mail className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-stone-900 text-sm">Email Support</h4>
-                    <p className="text-xs text-stone-600 mt-0.5">support.crova@gmail.com</p>
-                    <p className="text-[11px] text-stone-500 mt-2 flex items-center gap-1">
-                      <Clock className="w-3 h-3 text-amber-600" />
-                      Avg. Response: Under 2 hours
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Interactive Contact Form */}
-              <div className="bg-stone-50 rounded-xl border border-stone-200 p-5">
-                <h3 className="text-base font-black text-stone-900 mb-3">Send Us a Direct Message</h3>
-
-                {isSubmitted ? (
-                  <div className="bg-emerald-100 border border-emerald-300 text-emerald-950 p-4 rounded-lg flex items-center gap-3">
-                    <CheckCircle2 className="w-6 h-6 text-emerald-600 shrink-0" />
+                <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 flex flex-col justify-between">
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center shrink-0">
+                      <Phone className="w-5 h-5" />
+                    </div>
                     <div>
-                      <p className="font-bold text-sm">Thank you, {contactName || 'Crafter'}!</p>
-                      <p className="text-xs text-emerald-900 mt-0.5">
-                        Your message has been received. Our team will get back to your email ({contactEmail}) shortly!
+                      <h4 className="font-bold text-stone-900 text-sm">WhatsApp Fast Support</h4>
+                      <p className="text-xs text-stone-600 mt-0.5">+91 8871694891</p>
+                      <p className="text-[11px] text-stone-500 mt-1 flex items-center gap-1">
+                        <Clock className="w-3 h-3 text-emerald-600" />
+                        Avg. Response: Under 15 minutes
                       </p>
                     </div>
                   </div>
-                ) : (
-                  <form onSubmit={handleContactSubmit} className="space-y-3">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      <div>
-                        <label className="block text-xs font-bold text-stone-700 mb-1">Your Name</label>
-                        <input
-                          type="text"
-                          required
-                          value={contactName}
-                          onChange={(e) => setContactName(e.target.value)}
-                          placeholder="e.g. Priya Sharma"
-                          className="w-full bg-white border border-stone-300 rounded-lg px-3 py-2 text-xs text-stone-900 focus:outline-none focus:ring-2 focus:ring-[#f95721]"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-xs font-bold text-stone-700 mb-1">Email Address</label>
-                        <input
-                          type="email"
-                          required
-                          value={contactEmail}
-                          onChange={(e) => setContactEmail(e.target.value)}
-                          placeholder="name@example.com"
-                          className="w-full bg-white border border-stone-300 rounded-lg px-3 py-2 text-xs text-stone-900 focus:outline-none focus:ring-2 focus:ring-[#f95721]"
-                        />
-                      </div>
-                    </div>
+                  <a 
+                    href="https://wa.me/918871694891?text=Hi!%20I%20need%20assistance%20with%20the%20Crova%20Crochet%20Bundle."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2 px-3.5 rounded-lg inline-flex items-center justify-center gap-1.5 transition-colors cursor-pointer text-center"
+                  >
+                    <span>Chat on WhatsApp</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                </div>
 
+                <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex flex-col justify-between">
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 rounded-full bg-amber-600 text-white flex items-center justify-center shrink-0">
+                      <Mail className="w-5 h-5" />
+                    </div>
                     <div>
-                      <label className="block text-xs font-bold text-stone-700 mb-1">Order ID / Phone (Optional)</label>
-                      <input
-                        type="text"
-                        value={contactOrder}
-                        onChange={(e) => setContactOrder(e.target.value)}
-                        placeholder="e.g. ORD-9821 or 10-digit mobile"
-                        className="w-full bg-white border border-stone-300 rounded-lg px-3 py-2 text-xs text-stone-900 focus:outline-none focus:ring-2 focus:ring-[#f95721]"
-                      />
+                      <h4 className="font-bold text-stone-900 text-sm">Email Support</h4>
+                      <p className="text-xs text-stone-600 mt-0.5">support.crova@gmail.com</p>
+                      <p className="text-[11px] text-stone-500 mt-1 flex items-center gap-1">
+                        <Clock className="w-3 h-3 text-amber-600" />
+                        Avg. Response: Under 2 hours
+                      </p>
                     </div>
+                  </div>
+                  <a 
+                    href="mailto:support.crova@gmail.com?subject=Crova%20Crochet%20Bundle%20Support%20Request"
+                    className="mt-3.5 bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs py-2 px-3.5 rounded-lg inline-flex items-center justify-center gap-1.5 transition-colors cursor-pointer text-center"
+                  >
+                    <span>Send Email</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                </div>
+              </div>
 
-                    <div>
-                      <label className="block text-xs font-bold text-stone-700 mb-1">How can we help you?</label>
-                      <textarea
-                        required
-                        rows={3}
-                        value={contactMessage}
-                        onChange={(e) => setContactMessage(e.target.value)}
-                        placeholder="Ask a question about the crochet pattern bundle, download link, or course access..."
-                        className="w-full bg-white border border-stone-300 rounded-lg px-3 py-2 text-xs text-stone-900 focus:outline-none focus:ring-2 focus:ring-[#f95721]"
-                      />
-                    </div>
-
-                    <button
-                      type="submit"
-                      className="bg-[#f95721] hover:bg-[#e04511] text-white font-bold text-xs sm:text-sm py-2.5 px-6 rounded-lg flex items-center gap-2 shadow-sm transition-all cursor-pointer"
-                    >
-                      <Send className="w-4 h-4" />
-                      <span>Send Message</span>
-                    </button>
-                  </form>
-                )}
+              {/* Instant Help & Order Queries */}
+              <div className="bg-stone-50 rounded-xl border border-stone-200 p-4 space-y-3">
+                <h4 className="font-bold text-stone-900 text-xs sm:text-sm">Instant Help &amp; Order Queries</h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs text-stone-600">
+                  <div className="p-2.5 bg-white rounded-lg border border-stone-200">
+                    <strong className="block text-stone-900 mb-0.5">Didn&apos;t receive email link?</strong>
+                    <span>Check spam/promotions or send your payment screenshot to our WhatsApp support for instant re-delivery.</span>
+                  </div>
+                  <div className="p-2.5 bg-white rounded-lg border border-stone-200">
+                    <strong className="block text-stone-900 mb-0.5">Need pattern assistance?</strong>
+                    <span>Our team is available 7 days a week on WhatsApp to assist with PDF downloads and video course links.</span>
+                  </div>
+                </div>
               </div>
             </div>
           )}

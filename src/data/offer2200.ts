@@ -12,3 +12,5 @@ export const OFFER_2200_CONFIG = {
   checkoutUrl: 'https://superprofile.bio/vp/the-ultimate-crochet-mastery-bundle',
   checkoutUrlPlaceholder: 'https://superprofile.bio/vp/the-ultimate-crochet-mastery-bundle',
 } as const;
+
+export const BUY_NOW_URL = OFFER_2200_CONFIG.checkoutUrl;

@@ -13,6 +13,14 @@ import {
 import { OFFER_2200_CONFIG } from '../data/offer2200';
 import { PolicyModal, PolicyType } from './PolicyModal';
 import { ReviewSlider } from './ReviewSlider';
+import { RecentSalesTicker } from './RecentSalesTicker';
+import { BundleHoldersCounter } from './BundleHoldersCounter';
+import { ExitIntentModal } from './ExitIntentModal';
+import { BackToTop } from './BackToTop';
+import { SecurePaymentTrust } from './SecurePaymentTrust';
+import { ScrollProgressBar } from './ScrollProgressBar';
+import { LimitedTimeCountdown } from './LimitedTimeCountdown';
+import { ComparisonTable } from './ComparisonTable';
 
 interface CategoryItem {
   id: string;
@@ -495,13 +503,25 @@ export function Offer2200Placeholder(_props: Offer2200PlaceholderProps = {}) {
 
   const handleCheckoutClick = () => {
     try {
-      if (typeof window !== 'undefined' && (window as unknown as { fbq?: (...args: unknown[]) => void }).fbq) {
-        (window as unknown as { fbq: (...args: unknown[]) => void }).fbq('track', 'InitiateCheckout', {
-          content_id: OFFER_2200_CONFIG.contentId,
-          content_name: OFFER_2200_CONFIG.contentName,
-          currency: 'INR',
-          value: 199,
-        });
+      if (typeof window !== 'undefined') {
+        const win = window as unknown as { dataLayer?: Record<string, unknown>[]; fbq?: (...args: unknown[]) => void };
+        if (win.dataLayer) {
+          win.dataLayer.push({
+            event: 'InitiateCheckout',
+            content_id: OFFER_2200_CONFIG.contentId,
+            content_name: OFFER_2200_CONFIG.contentName,
+            currency: 'INR',
+            value: 199,
+          });
+        }
+        if (win.fbq) {
+          win.fbq('track', 'InitiateCheckout', {
+            content_id: OFFER_2200_CONFIG.contentId,
+            content_name: OFFER_2200_CONFIG.contentName,
+            currency: 'INR',
+            value: 199,
+          });
+        }
       }
     } catch {
       // Ignore analytics tracking errors
@@ -550,33 +570,33 @@ export function Offer2200Placeholder(_props: Offer2200PlaceholderProps = {}) {
   };
 
   const renderCategoryCard = (category: CategoryItem) => (
-    <div key={category.id} className="bg-white rounded-2xl border border-stone-200/90 overflow-hidden shadow-xs hover:shadow-md transition-shadow">
+    <div key={category.id} className="bg-white rounded-xl sm:rounded-2xl border border-stone-200/90 overflow-hidden shadow-xs hover:shadow-md transition-shadow">
       {/* Category Header in cohesive warm stone/amber style */}
-      <div className="bg-stone-900 text-white text-center py-1.5 px-2">
+      <div className="bg-stone-900 text-white text-center py-1.5 sm:py-2 px-1 sm:px-2.5">
         <h4 className="font-bold text-xs sm:text-sm tracking-wide font-sans">
           {category.name}
         </h4>
       </div>
 
       {/* 2x2 Image Collage or Full Cover Image */}
-      <div className="relative p-1.5 bg-[#faf7f2]">
+      <div className="relative p-1 sm:p-2.5 bg-[#faf7f2]">
         {category.singleImage ? (
-          <div className="rounded-lg overflow-hidden aspect-square">
+          <div className="rounded-lg sm:rounded-xl overflow-hidden aspect-square bg-white shadow-2xs group">
             <img
               src={category.singleImage}
               alt={category.name}
-              className="w-full h-full object-cover rounded-xs"
+              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               loading="lazy"
             />
           </div>
         ) : (
-          <div className="grid grid-cols-2 gap-1 rounded-lg overflow-hidden aspect-square">
+          <div className="grid grid-cols-2 gap-1 sm:gap-1.5 rounded-lg sm:rounded-xl overflow-hidden aspect-square bg-white shadow-2xs group">
             {category.images.map((img, i) => (
               <img
                 key={i}
                 src={img}
                 alt={`${category.name} pattern ${i + 1}`}
-                className="w-full h-full object-cover rounded-xs"
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                 loading="lazy"
               />
             ))}
@@ -588,6 +608,9 @@ export function Offer2200Placeholder(_props: Offer2200PlaceholderProps = {}) {
 
   return (
     <div className="min-h-screen bg-[#faf7f2] text-stone-800 font-sans selection:bg-amber-200 selection:text-amber-950 pb-20">
+      {/* Subtle Scroll Depth Progress Bar */}
+      <ScrollProgressBar />
+
       {/* Top Countdown Header Bar */}
       <header className="w-full bg-[#1c1917] text-white py-2.5 px-4 shadow-sm border-b border-stone-800">
         <div className="max-w-md mx-auto text-center">
@@ -623,9 +646,9 @@ export function Offer2200Placeholder(_props: Offer2200PlaceholderProps = {}) {
       </header>
 
       {/* Main Container */}
-      <section className="w-full px-2.5 sm:px-4 pt-5 pb-8 max-w-lg sm:max-w-xl mx-auto text-center">
+      <section className="w-full px-2.5 sm:px-5 md:px-8 pt-5 pb-8 max-w-xl sm:max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto text-center">
         {/* Top Eyebrow Headings */}
-        <div className="mb-5">
+        <div className="mb-5 max-w-xl mx-auto">
           <p className="text-[#dc2626] font-extrabold text-center text-xs sm:text-sm uppercase tracking-wider">
             Hurry! This Special Offer Ends Soon!
           </p>
@@ -645,304 +668,106 @@ export function Offer2200Placeholder(_props: Offer2200PlaceholderProps = {}) {
         </div>
 
         {/* Hero Offer Card */}
-        <div className="bg-white rounded-3xl border border-stone-200/90 shadow-md p-4 sm:p-5 text-center">
-          {/* Mosaic Graphic Mockup */}
-          <div className="bg-[#fcfaf7] rounded-2xl border border-stone-200/90 p-2 shadow-xs mb-4 overflow-hidden">
-            <div className="grid grid-cols-4 gap-1 sm:gap-1.5 relative">
-              {/* Row 1 */}
-              <div className="rounded border border-stone-200/80 overflow-hidden bg-white">
-                <div className="bg-[#0891b2] text-white text-[7px] font-bold py-0.5 text-center leading-none">
-                  • Toys •
-                </div>
-                <img
-                  src="https://i.ibb.co/bMRVzJGv/Toys-Dolls.jpg"
-                  alt="Toys crochet"
-                  className="w-full aspect-square object-cover"
-                />
-              </div>
-
-              <div className="rounded border border-stone-200/80 overflow-hidden bg-white">
-                <div className="bg-[#0891b2] text-white text-[7px] font-bold py-0.5 text-center leading-none">
-                  • Animal •
-                </div>
-                <img
-                  src="https://i.ibb.co/PZh96rV1/zoo-animals.jpg"
-                  alt="Animal crochet"
-                  className="w-full aspect-square object-cover"
-                />
-              </div>
-
-              <div className="rounded border border-stone-200/80 overflow-hidden bg-white">
-                <div className="bg-[#0891b2] text-white text-[7px] font-bold py-0.5 text-center leading-none">
-                  • Doll •
-                </div>
-                <img
-                  src="https://i.ibb.co/cSx6FysH/Pastel-Crochet-Ragdoll.jpg"
-                  alt="Doll crochet"
-                  className="w-full aspect-square object-cover"
-                />
-              </div>
-
-              <div className="rounded border border-stone-200/80 overflow-hidden bg-white">
-                <div className="bg-[#0891b2] text-white text-[7px] font-bold py-0.5 text-center leading-none">
-                  • Festival •
-                </div>
-                <img
-                  src="https://i.ibb.co/8DdtcWQW/fastival.jpg"
-                  alt="Festival crochet"
-                  className="w-full aspect-square object-cover"
-                />
-              </div>
-
-              {/* Row 2: Left 1 */}
-              <div className="rounded border border-stone-200/80 overflow-hidden bg-white">
-                <div className="bg-[#0891b2] text-white text-[7px] font-bold py-0.5 text-center leading-none">
-                  • Amigurumi •
-                </div>
-                <img
-                  src="https://i.ibb.co/gZPsrv2k/amigurumi.jpg"
-                  alt="Amigurumi"
-                  className="w-full aspect-square object-cover"
-                />
-              </div>
-
-              {/* Center Emblem: Col Span 2, Row Span 2 */}
-              <div className="col-span-2 row-span-2 rounded-2xl bg-white border-2 sm:border-3 border-[#0891b2]/40 ring-2 ring-[#0891b2]/10 overflow-hidden shadow-md relative z-10 aspect-square flex items-center justify-center">
-                <img
-                  src="https://i.ibb.co/Wv96sZTf/2200middle.jpg"
-                  alt="2200+ Crochet Patterns All in One Bundle"
-                  className="w-full h-full object-cover"
-                  loading="eager"
-                />
-              </div>
-
-              {/* Row 2: Right 1 */}
-              <div className="rounded border border-stone-200/80 overflow-hidden bg-white">
-                <div className="bg-[#0891b2] text-white text-[7px] font-bold py-0.5 text-center leading-none">
-                  • Blanket •
-                </div>
-                <img
-                  src="https://i.ibb.co/NdygsLvK/Blankets-Throws.jpg"
-                  alt="Blanket"
-                  className="w-full aspect-square object-cover"
-                />
-              </div>
-
-              {/* Row 3: Left 2 */}
-              <div className="rounded border border-stone-200/80 overflow-hidden bg-white">
-                <div className="bg-[#0891b2] text-white text-[7px] font-bold py-0.5 text-center leading-none">
-                  • Alphabets •
-                </div>
-                <img
-                  src="https://i.ibb.co/39h92Vng/Alphabet-Letters.jpg"
-                  alt="Alphabets"
-                  className="w-full aspect-square object-cover"
-                />
-              </div>
-
-              {/* Row 3: Right 2 - Flowers */}
-              <div className="rounded border border-stone-200/80 overflow-hidden bg-white">
-                <div className="bg-[#0891b2] text-white text-[7px] font-bold py-0.5 text-center leading-none">
-                  • Flowers •
-                </div>
-                <img
-                  src="https://i.ibb.co/wNpp7zMX/Flowers-Bouquets.jpg"
-                  alt="Flowers"
-                  className="w-full aspect-square object-cover"
-                />
-              </div>
-
-              {/* Row 4 */}
-              <div className="rounded border border-stone-200/80 overflow-hidden bg-white">
-                <div className="bg-[#0891b2] text-white text-[7px] font-bold py-0.5 text-center leading-none">
-                  • Home Decor •
-                </div>
-                <img
-                  src="https://i.ibb.co/qL27ZdNB/Home-D-cor.jpg"
-                  alt="Home Decor"
-                  className="w-full aspect-square object-cover"
-                />
-              </div>
-
-              <div className="rounded border border-stone-200/80 overflow-hidden bg-white">
-                <div className="bg-[#0891b2] text-white text-[7px] font-bold py-0.5 text-center leading-none">
-                  • Hanging •
-                </div>
-                <img
-                  src="https://i.ibb.co/Sw7WMvvY/Hangings-Plant-Holders.jpg"
-                  alt="Hanging"
-                  className="w-full aspect-square object-cover"
-                />
-              </div>
-
-              <div className="rounded border border-stone-200/80 overflow-hidden bg-white">
-                <div className="bg-[#0891b2] text-white text-[7px] font-bold py-0.5 text-center leading-none">
-                  • Keychain •
-                </div>
-                <img
-                  src="https://i.ibb.co/S4z7mH5x/Keychains-Charms.jpg"
-                  alt="Keychain"
-                  className="w-full aspect-square object-cover"
-                />
-              </div>
-
-              <div className="rounded border border-stone-200/80 overflow-hidden bg-white">
-                <div className="bg-[#0891b2] text-white text-[7px] font-bold py-0.5 text-center leading-none">
-                  • Pillow •
-                </div>
-                <img
-                  src="https://i.ibb.co/hJxbH4dN/Pillows-Cushions.jpg"
-                  alt="Pillow"
-                  className="w-full aspect-square object-cover"
-                />
-              </div>
-
-              {/* Row 5 */}
-              <div className="rounded border border-stone-200/80 overflow-hidden bg-white">
-                <div className="bg-[#0891b2] text-white text-[7px] font-bold py-0.5 text-center leading-none">
-                  • Bags •
-                </div>
-                <img
-                  src="https://i.ibb.co/Y4kT9tY5/Bags-Handbags.jpg"
-                  alt="Bags"
-                  className="w-full aspect-square object-cover"
-                />
-              </div>
-
-              <div className="rounded border border-stone-200/80 overflow-hidden bg-white">
-                <div className="bg-[#0891b2] text-white text-[7px] font-bold py-0.5 text-center leading-none">
-                  • Purse •
-                </div>
-                <img
-                  src="https://i.ibb.co/q3xv63kd/Purse-Baskets.jpg"
-                  alt="Purse"
-                  className="w-full aspect-square object-cover"
-                />
-              </div>
-
-              <div className="rounded border border-stone-200/80 overflow-hidden bg-white">
-                <div className="bg-[#0891b2] text-white text-[7px] font-bold py-0.5 text-center leading-none">
-                  • Winter •
-                </div>
-                <img
-                  src="https://i.ibb.co/1FV4Mj0/Winter-Collection.jpg"
-                  alt="Winter"
-                  className="w-full aspect-square object-cover"
-                />
-              </div>
-
-              <div className="rounded border border-stone-200/80 overflow-hidden bg-white">
-                <div className="bg-[#0891b2] text-white text-[7px] font-bold py-0.5 text-center leading-none">
-                  • Slippers •
-                </div>
-                <img
-                  src="https://i.ibb.co/dwDr2yXv/Slippers-Socks.jpg"
-                  alt="Slippers"
-                  className="w-full aspect-square object-cover"
-                />
-              </div>
-            </div>
+        <div className="bg-white rounded-3xl border border-stone-200/90 shadow-md overflow-hidden text-center">
+          {/* Hero Bundle Graphic Image - Fills the top border of the card */}
+          <div className="w-full bg-[#fcfaf7] border-b border-stone-100 overflow-hidden">
+            <img
+              src="https://i.ibb.co/XrLjj8Fv/Crova-s-Ultimate-Crochet-Design-Bundle-1-1.png"
+              alt="Crova's Ultimate Crochet Design Bundle - 2200+ Patterns"
+              className="w-full h-auto object-cover sm:object-contain mx-auto block hover:scale-[1.01] transition-transform duration-300"
+              loading="eager"
+            />
           </div>
 
-          {/* Pricing & Title */}
-          <h3 className="text-xl sm:text-2xl font-black text-stone-950 mt-4 mb-1 font-sans">
-            The Ultimate Crochet Mastery Bundle
-          </h3>
-          <div className="flex items-baseline justify-center gap-2.5 mb-2 font-sans">
-            <span className="text-3xl sm:text-4xl font-black text-[#dc2626]">
-              Just ₹199
-            </span>
-            <span className="text-lg sm:text-xl text-stone-400 font-bold line-through decoration-stone-400 decoration-2">
-              Rs. 6,999/-
-            </span>
+          <div className="p-4 sm:p-6 md:p-8 pt-4 sm:pt-6">
+            {/* Pricing & Title */}
+            <h3 className="text-xl sm:text-2xl font-black text-stone-950 mt-1 mb-1 font-sans">
+              The Ultimate Crochet Mastery Bundle
+            </h3>
+            <div className="flex items-baseline justify-center gap-2.5 mb-2 font-sans">
+              <span className="text-3xl sm:text-4xl font-black text-[#dc2626]">
+                Just ₹199
+              </span>
+              <span className="text-lg sm:text-xl text-stone-400 font-bold line-through decoration-stone-400 decoration-2">
+                Rs. 2,999/-
+              </span>
+            </div>
+
+            <div className="flex items-center justify-center gap-1.5 mb-4 text-xs sm:text-sm">
+              <div className="flex text-amber-400">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-4 h-4 fill-amber-400 stroke-amber-500" />
+                ))}
+              </div>
+              <span className="font-bold text-stone-700">
+                Trust Score <strong className="text-stone-900 font-extrabold">4.9</strong> | <strong className="text-stone-900 font-extrabold">9,430</strong> Reviews
+              </span>
+            </div>
+
+            {/* Dynamic Current Bundle Holders Counter for Real-Time Urgency & Social Proof */}
+            <div className="my-3.5">
+              <BundleHoldersCounter variant="card" />
+            </div>
+
+            <div className="w-full h-px bg-stone-200 my-4" />
+
+            {/* Feature List with Emojis matching Screenshot 1 & 2 */}
+            <ul className="text-left space-y-2.5 text-stone-900 font-extrabold text-sm sm:text-base font-sans mb-6">
+              <li className="flex items-center gap-2.5">
+                <span className="text-base shrink-0">🧶</span>
+                <span>Hindi + English Crochet Mastery Course</span>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <span className="text-base shrink-0">✅</span>
+                <span>2200+ Crochet Patterns Step by Step</span>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <span className="text-base shrink-0">📁</span>
+                <span>Digital PDF Patterns</span>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <span className="text-base shrink-0">💻</span>
+                <span>Instant Download Access</span>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <span className="text-base shrink-0">🎁</span>
+                <span>6 Free Bonuses</span>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <span className="text-base shrink-0">♾️</span>
+                <span>Lifetime Access &amp; Updates</span>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <span className="text-base shrink-0">💬</span>
+                <span>24/7 Support</span>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <span className="text-base shrink-0">🔥</span>
+                <span>Limited-Time Offer!</span>
+              </li>
+            </ul>
+
+            {/* Prominent Limited-Time Countdown Timer Component */}
+            <LimitedTimeCountdown
+              externalTimeLeft={timeLeft}
+              variant="hero"
+              prefixText="Offer ends in"
+              className="mb-4"
+            />
+
+            {/* Unified Signature Action CTA Button */}
+            <a
+              href={OFFER_2200_CONFIG.checkoutUrl}
+              onClick={handleCheckoutClick}
+              className="w-full bg-[#ea580c] hover:bg-[#c2410c] active:scale-[0.99] text-white font-extrabold py-3.5 px-4 rounded-xl shadow-lg hover:shadow-orange-500/25 text-base sm:text-lg tracking-wide uppercase transition-all flex items-center justify-center gap-2 cursor-pointer no-underline"
+            >
+              <ShoppingCart className="w-5 h-5" />
+              <span>GET THIS FULL BUNDLE @ ₹199</span>
+            </a>
+
+            {/* Secure Payment & Trust Section */}
+            <SecurePaymentTrust />
           </div>
-
-          <div className="flex items-center justify-center gap-1.5 mb-4 text-xs sm:text-sm">
-            <div className="flex text-amber-400">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-4 h-4 fill-amber-400 stroke-amber-500" />
-              ))}
-            </div>
-            <span className="font-bold text-stone-700">
-              Trust Score <strong className="text-stone-900 font-extrabold">4.9</strong> | <strong className="text-stone-900 font-extrabold">9,430</strong> Reviews
-            </span>
-          </div>
-
-          <div className="w-full h-px bg-stone-200 my-4" />
-
-          {/* Feature List with Emojis matching Screenshot 1 & 2 */}
-          <ul className="text-left space-y-2.5 text-stone-900 font-extrabold text-sm sm:text-base font-sans mb-6">
-            <li className="flex items-center gap-2.5">
-              <span className="text-base shrink-0">🧶</span>
-              <span>Hindi + English Crochet Mastery Course</span>
-            </li>
-            <li className="flex items-center gap-2.5">
-              <span className="text-base shrink-0">✅</span>
-              <span>2200+ Crochet Patterns Step by Step</span>
-            </li>
-            <li className="flex items-center gap-2.5">
-              <span className="text-base shrink-0">📁</span>
-              <span>Digital PDF Patterns</span>
-            </li>
-            <li className="flex items-center gap-2.5">
-              <span className="text-base shrink-0">💻</span>
-              <span>Instant Download Access</span>
-            </li>
-            <li className="flex items-center gap-2.5">
-              <span className="text-base shrink-0">🎁</span>
-              <span>6 Free Bonuses</span>
-            </li>
-            <li className="flex items-center gap-2.5">
-              <span className="text-base shrink-0">♾️</span>
-              <span>Lifetime Access &amp; Updates</span>
-            </li>
-            <li className="flex items-center gap-2.5">
-              <span className="text-base shrink-0">💬</span>
-              <span>24/7 Support</span>
-            </li>
-            <li className="flex items-center gap-2.5">
-              <span className="text-base shrink-0">🔥</span>
-              <span>Limited-Time Offer!</span>
-            </li>
-          </ul>
-
-          {/* Countdown Timer Boxes */}
-          <div className="flex items-center justify-center gap-2.5 mb-5">
-            <div className="bg-[#1c1917] text-white border border-stone-800 rounded-xl py-2 px-3 min-w-[72px] shadow-xs">
-              <span className="block text-2xl font-black text-amber-400 leading-none font-sans">
-                {formatDigit(timeLeft.hours)}
-              </span>
-              <span className="block text-[10px] text-stone-400 font-bold uppercase tracking-wider mt-0.5">
-                Hours
-              </span>
-            </div>
-            <div className="bg-[#1c1917] text-white border border-stone-800 rounded-xl py-2 px-3 min-w-[72px] shadow-xs">
-              <span className="block text-2xl font-black text-amber-400 leading-none font-sans">
-                {formatDigit(timeLeft.minutes)}
-              </span>
-              <span className="block text-[10px] text-stone-400 font-bold uppercase tracking-wider mt-0.5">
-                Minutes
-              </span>
-            </div>
-            <div className="bg-[#1c1917] text-white border border-stone-800 rounded-xl py-2 px-3 min-w-[72px] shadow-xs">
-              <span className="block text-2xl font-black text-amber-400 leading-none font-sans">
-                {formatDigit(timeLeft.seconds)}
-              </span>
-              <span className="block text-[10px] text-stone-400 font-bold uppercase tracking-wider mt-0.5">
-                Seconds
-              </span>
-            </div>
-          </div>
-
-          {/* Unified Signature Action CTA Button */}
-          <a
-            href={OFFER_2200_CONFIG.checkoutUrl}
-            onClick={handleCheckoutClick}
-            className="w-full bg-[#ea580c] hover:bg-[#c2410c] active:scale-[0.99] text-white font-extrabold py-3.5 px-4 rounded-xl shadow-lg hover:shadow-orange-500/25 text-base sm:text-lg tracking-wide uppercase transition-all flex items-center justify-center gap-2 cursor-pointer no-underline"
-          >
-            <ShoppingCart className="w-5 h-5" />
-            <span>GET THIS FULL BUNDLE @ ₹199</span>
-          </a>
         </div>
 
         {/* Digital Product Note */}
@@ -1064,6 +889,9 @@ export function Offer2200Placeholder(_props: Offer2200PlaceholderProps = {}) {
           >
             <span>GET INSTANT ACCESS @ ₹199</span>
           </a>
+
+          {/* Secure Payment & Trust Badges */}
+          <SecurePaymentTrust variant="compact" />
         </div>
 
         {/* 20+ Categories Section */}
@@ -1078,8 +906,8 @@ export function Offer2200Placeholder(_props: Offer2200PlaceholderProps = {}) {
           </div>
 
           {/* Group 1 Grid */}
-          <div className="bg-white rounded-3xl border border-stone-200/90 p-3 sm:p-4 shadow-sm mb-6">
-            <div className="grid grid-cols-2 gap-3">
+          <div className="bg-white rounded-2xl sm:rounded-3xl border border-stone-200/90 p-2 sm:p-5 md:p-6 shadow-sm mb-6 -mx-1 sm:mx-0">
+            <div className="grid grid-cols-2 gap-2 sm:gap-5 md:gap-6">
               {CATEGORIES_GROUP_1.map(renderCategoryCard)}
             </div>
           </div>
@@ -1087,8 +915,8 @@ export function Offer2200Placeholder(_props: Offer2200PlaceholderProps = {}) {
           {renderConsistentTimer('Launch Offer Active')}
 
           {/* Group 2 Grid */}
-          <div className="bg-white rounded-3xl border border-stone-200/90 p-3 sm:p-4 shadow-sm mb-6">
-            <div className="grid grid-cols-2 gap-3">
+          <div className="bg-white rounded-2xl sm:rounded-3xl border border-stone-200/90 p-2 sm:p-5 md:p-6 shadow-sm mb-6 -mx-1 sm:mx-0">
+            <div className="grid grid-cols-2 gap-2 sm:gap-5 md:gap-6">
               {CATEGORIES_GROUP_2.map(renderCategoryCard)}
             </div>
           </div>
@@ -1096,8 +924,8 @@ export function Offer2200Placeholder(_props: Offer2200PlaceholderProps = {}) {
           {renderConsistentTimer('Price Increases Soon')}
 
           {/* Group 3 Grid */}
-          <div className="bg-white rounded-3xl border border-stone-200/90 p-3 sm:p-4 shadow-sm mb-6">
-            <div className="grid grid-cols-2 gap-3">
+          <div className="bg-white rounded-2xl sm:rounded-3xl border border-stone-200/90 p-2 sm:p-5 md:p-6 shadow-sm mb-6 -mx-1 sm:mx-0">
+            <div className="grid grid-cols-2 gap-2 sm:gap-5 md:gap-6">
               {CATEGORIES_GROUP_3.map(renderCategoryCard)}
             </div>
           </div>
@@ -1127,18 +955,18 @@ export function Offer2200Placeholder(_props: Offer2200PlaceholderProps = {}) {
               </p>
             </div>
 
-            <div className="bg-white rounded-b-2xl border border-t-0 border-stone-200/90 p-3 sm:p-5 shadow-sm">
-              <div className="grid grid-cols-2 gap-3 sm:gap-4">
+            <div className="bg-white rounded-b-2xl border border-t-0 border-stone-200/90 p-3.5 sm:p-6 shadow-sm">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3.5 sm:gap-5">
                 {BONUSES_3D.map(bonus => (
                   <div
                     key={bonus.id}
-                    className="bg-[#faf7f2] rounded-2xl border border-stone-200/80 p-2.5 sm:p-3 flex flex-col items-center text-center shadow-2xs hover:shadow-xs transition-shadow"
+                    className="bg-[#faf7f2] rounded-2xl border border-stone-200/80 p-3 sm:p-4 flex flex-col items-center text-center shadow-2xs hover:shadow-xs transition-shadow"
                   >
-                    <div className="w-full aspect-[3/4] rounded-xl overflow-hidden bg-white flex items-center justify-center mb-2 shadow-2xs border border-stone-200/60">
+                    <div className="w-full aspect-[4/5] rounded-xl overflow-hidden bg-white flex items-center justify-center mb-2.5 shadow-xs border border-stone-200/60 group">
                       <img
                         src={bonus.image}
                         alt={bonus.title}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                         loading="lazy"
                       />
                     </div>
@@ -1167,6 +995,12 @@ export function Offer2200Placeholder(_props: Offer2200PlaceholderProps = {}) {
               </a>
             </div>
           </div>
+
+          {/* Crova vs Other Crochet Patterns Comparison Table */}
+          <ComparisonTable
+            checkoutUrl={OFFER_2200_CONFIG.checkoutUrl}
+            onOpenCheckout={handleCheckoutClick}
+          />
 
           {/* Customer Reviews Slider matching uploaded screenshot */}
           <ReviewSlider />
@@ -1232,6 +1066,11 @@ export function Offer2200Placeholder(_props: Offer2200PlaceholderProps = {}) {
           >
             <span>GET INSTANT ACCESS @ ₹199</span>
           </a>
+
+          {/* Secure Payment & Trust Badges */}
+          <div className="max-w-sm mx-auto">
+            <SecurePaymentTrust variant="compact" />
+          </div>
         </div>
       </section>
 
@@ -1287,6 +1126,26 @@ export function Offer2200Placeholder(_props: Offer2200PlaceholderProps = {}) {
         initialPolicy={policyModal.policy}
         onClose={() => setPolicyModal(prev => ({ ...prev, isOpen: false }))}
       />
+
+      {/* Social Proof Recent Sales Ticker */}
+      <RecentSalesTicker
+        bundleName="the 2200+ Bundle"
+        thumbnailUrl="https://i.ibb.co/Wv96sZTf/2200middle.jpg"
+        onOpenCheckout={handleCheckoutClick}
+      />
+
+      {/* Exit-Intent 10% Discount Offer Modal */}
+      <ExitIntentModal
+        discountCode="SAVE10"
+        discountPercent={10}
+        originalPrice={199}
+        discountedPrice={179}
+        checkoutUrl={OFFER_2200_CONFIG.checkoutUrl}
+        onOpenCheckout={handleCheckoutClick}
+      />
+
+      {/* Floating Back to Top Button */}
+      <BackToTop />
 
       {/* Sticky Bottom Bar for Mobile */}
       <div className="fixed bottom-0 left-0 right-0 p-3 bg-white/95 backdrop-blur-xs border-t border-stone-200 z-40 shadow-lg">

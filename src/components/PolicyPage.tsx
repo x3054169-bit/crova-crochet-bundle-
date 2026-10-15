@@ -16,7 +16,7 @@ import {
   HelpCircle
 } from 'lucide-react';
 import { PolicyType } from './PolicyModal';
-import { BUY_NOW_URL } from '../data/bundleData';
+import { BUY_NOW_URL } from '../data/offer2200';
 
 interface PolicyPageProps {
   policy: PolicyType;
