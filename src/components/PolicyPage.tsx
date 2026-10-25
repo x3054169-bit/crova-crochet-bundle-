@@ -596,7 +596,7 @@ export function PolicyPage({ policy, onNavigate, onOpenCheckout }: PolicyPagePro
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={onOpenCheckout}
-                className="w-full sm:w-auto bg-[#f95721] hover:bg-[#e04511] text-white font-black text-sm py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 cursor-pointer no-underline"
+                className="w-full sm:w-auto bg-[#f95721] text-white font-black text-sm py-3 px-6 rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer no-underline btn-high-converting"
               >
                 <ShoppingBag className="w-4 h-4" />
                 <span>Get Instant Access @ ₹199</span>

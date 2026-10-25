@@ -8,7 +8,10 @@ import {
   Check, 
   ShieldCheck, 
   Sparkles, 
-  Lock 
+  Lock,
+  Eye,
+  Flame,
+  ArrowRight
 } from 'lucide-react';
 import { OFFER_2200_CONFIG } from '../data/offer2200';
 import { PolicyModal, PolicyType } from './PolicyModal';
@@ -21,6 +24,9 @@ import { SecurePaymentTrust } from './SecurePaymentTrust';
 import { ScrollProgressBar } from './ScrollProgressBar';
 import { LimitedTimeCountdown } from './LimitedTimeCountdown';
 import { ComparisonTable } from './ComparisonTable';
+import { ShopifyAnnouncementBar } from './ShopifyAnnouncementBar';
+import { LiveShoppersBadge } from './LiveShoppersBadge';
+import { PatternPreviewModal } from './PatternPreviewModal';
 
 interface CategoryItem {
   id: string;
@@ -393,6 +399,8 @@ export function Offer2200Placeholder(_props: Offer2200PlaceholderProps = {}) {
     isOpen: false,
     policy: 'privacy',
   });
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+  const [selectedCategoryFilter, setSelectedCategoryFilter] = useState<string>('all');
 
   const handleOpenPolicy = (policy: PolicyType) => {
     setPolicyModal({ isOpen: true, policy });
@@ -611,9 +619,12 @@ export function Offer2200Placeholder(_props: Offer2200PlaceholderProps = {}) {
   );
 
   return (
-    <div className="min-h-screen bg-[#faf7f2] text-stone-800 font-sans selection:bg-amber-200 selection:text-amber-950 pb-20">
+    <div className="min-h-screen bg-[#faf7f2] text-stone-800 font-sans selection:bg-amber-200 selection:text-amber-950 pb-24 sm:pb-20">
       {/* Subtle Scroll Depth Progress Bar */}
       <ScrollProgressBar />
+
+      {/* High-Converting Shopify-Style Announcement Bar */}
+      <ShopifyAnnouncementBar />
 
       {/* Top Countdown Header Bar */}
       <header className="w-full bg-[#1c1917] text-white py-2.5 px-4 shadow-sm border-b border-stone-800">
@@ -683,7 +694,32 @@ export function Offer2200Placeholder(_props: Offer2200PlaceholderProps = {}) {
             />
           </div>
 
+          {/* Interactive Pattern Preview & Video Guide Bar (Shopify High-Impact Media Feature) */}
+          <div className="bg-[#faf7f2] border-b border-stone-200/90 px-3.5 py-2.5 flex items-center justify-between flex-wrap gap-2 text-xs">
+            <div className="flex items-center gap-2 text-stone-700 font-bold">
+              <span className="flex h-2 w-2 relative">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+              <span>HD PDF Patterns + Video Walkthroughs</span>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setIsPreviewOpen(true)}
+              className="inline-flex items-center gap-1.5 text-xs font-black text-[#ea580c] hover:text-[#c2410c] bg-white hover:bg-orange-50 border border-orange-200 px-3 py-1.5 rounded-xl shadow-2xs transition-all cursor-pointer min-h-[36px]"
+            >
+              <Eye className="w-3.5 h-3.5" />
+              <span>Preview Sample Pattern &amp; Video</span>
+            </button>
+          </div>
+
           <div className="p-4 sm:p-6 md:p-8 pt-4 sm:pt-6">
+            {/* Live Shoppers Urgency Badge (Shopify Social Proof & Scarcity) */}
+            <div className="mb-3 flex justify-center">
+              <LiveShoppersBadge variant="inline" />
+            </div>
+
             {/* Pricing & Title */}
             <h3 className="text-xl sm:text-2xl font-black text-stone-950 mt-1 mb-1 font-sans">
               The Ultimate Crochet Mastery Bundle
@@ -763,7 +799,7 @@ export function Offer2200Placeholder(_props: Offer2200PlaceholderProps = {}) {
             <a
               href={OFFER_2200_CONFIG.checkoutUrl}
               onClick={handleCheckoutClick}
-              className="w-full bg-[#ea580c] hover:bg-[#c2410c] active:scale-[0.99] text-white font-extrabold py-3.5 px-4 rounded-xl shadow-lg hover:shadow-orange-500/25 text-base sm:text-lg tracking-wide uppercase transition-all flex items-center justify-center gap-2 cursor-pointer no-underline"
+              className="w-full bg-[#ea580c] text-white font-extrabold py-3.5 px-4 rounded-xl text-base sm:text-lg tracking-wide uppercase flex items-center justify-center gap-2 cursor-pointer no-underline btn-high-converting"
             >
               <ShoppingCart className="w-5 h-5" />
               <span>GET THIS FULL BUNDLE @ ₹199</span>
@@ -889,7 +925,7 @@ export function Offer2200Placeholder(_props: Offer2200PlaceholderProps = {}) {
           <a
             href={OFFER_2200_CONFIG.checkoutUrl}
             onClick={handleCheckoutClick}
-            className="w-full mt-6 bg-[#ea580c] hover:bg-[#c2410c] active:scale-[0.99] text-white font-extrabold py-3.5 px-4 rounded-xl shadow-md hover:shadow-orange-500/20 text-base sm:text-lg tracking-wide uppercase transition-all flex items-center justify-center gap-2 cursor-pointer no-underline"
+            className="w-full mt-6 bg-[#ea580c] text-white font-extrabold py-3.5 px-4 rounded-xl text-base sm:text-lg tracking-wide uppercase flex items-center justify-center gap-2 cursor-pointer no-underline btn-high-converting"
           >
             <span>GET INSTANT ACCESS @ ₹199</span>
           </a>
@@ -904,42 +940,95 @@ export function Offer2200Placeholder(_props: Offer2200PlaceholderProps = {}) {
             <h2 className="text-xl sm:text-2xl font-serif font-black text-stone-900 tracking-wide mb-1">
               What Will I Receive
             </h2>
-            <p className="text-base sm:text-lg font-serif font-bold text-[#c2410c]">
+            <p className="text-base sm:text-lg font-serif font-bold text-[#c2410c] mb-4">
               20+ Curated Pattern Categories
             </p>
-          </div>
 
-          {/* Group 1 Grid */}
-          <div className="bg-white rounded-2xl sm:rounded-3xl border border-stone-200/90 p-2 sm:p-5 md:p-6 shadow-sm mb-6 -mx-1 sm:mx-0">
-            <div className="grid grid-cols-2 gap-2 sm:gap-5 md:gap-6">
-              {CATEGORIES_GROUP_1.map(renderCategoryCard)}
+            {/* Category Discovery Filter Tabs (Shopify Principle #3 - Flat & Clear Navigation) */}
+            <div className="flex items-center justify-center flex-wrap gap-1.5 sm:gap-2 mb-2">
+              {[
+                { id: 'all', label: 'All 2,200+ Patterns' },
+                { id: 'amigurumi', label: '🧸 Amigurumi & Toys' },
+                { id: 'baby', label: '👶 Baby Booties & Wear' },
+                { id: 'wearables', label: '👗 Tops & Wearables' },
+                { id: 'bags', label: '👜 Bags & Purses' },
+                { id: 'decor', label: '🌸 Decor & Flowers' },
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  type="button"
+                  onClick={() => setSelectedCategoryFilter(tab.id)}
+                  className={`text-xs font-bold px-3 py-2 rounded-xl transition-all cursor-pointer min-h-[40px] flex items-center justify-center ${
+                    selectedCategoryFilter === tab.id
+                      ? 'bg-[#ea580c] text-white shadow-sm'
+                      : 'bg-white hover:bg-stone-100 text-stone-700 border border-stone-200'
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
             </div>
           </div>
 
-          {renderConsistentTimer('Launch Offer Active')}
+          {selectedCategoryFilter === 'all' ? (
+            <>
+              {/* Group 1 Grid */}
+              <div className="bg-white rounded-2xl sm:rounded-3xl border border-stone-200/90 p-2 sm:p-5 md:p-6 shadow-sm mb-6 -mx-1 sm:mx-0">
+                <div className="grid grid-cols-2 gap-2 sm:gap-5 md:gap-6">
+                  {CATEGORIES_GROUP_1.map(renderCategoryCard)}
+                </div>
+              </div>
 
-          {/* Group 2 Grid */}
-          <div className="bg-white rounded-2xl sm:rounded-3xl border border-stone-200/90 p-2 sm:p-5 md:p-6 shadow-sm mb-6 -mx-1 sm:mx-0">
-            <div className="grid grid-cols-2 gap-2 sm:gap-5 md:gap-6">
-              {CATEGORIES_GROUP_2.map(renderCategoryCard)}
+              {renderConsistentTimer('Launch Offer Active')}
+
+              {/* Group 2 Grid */}
+              <div className="bg-white rounded-2xl sm:rounded-3xl border border-stone-200/90 p-2 sm:p-5 md:p-6 shadow-sm mb-6 -mx-1 sm:mx-0">
+                <div className="grid grid-cols-2 gap-2 sm:gap-5 md:gap-6">
+                  {CATEGORIES_GROUP_2.map(renderCategoryCard)}
+                </div>
+              </div>
+
+              {renderConsistentTimer('Price Increases Soon')}
+
+              {/* Group 3 Grid */}
+              <div className="bg-white rounded-2xl sm:rounded-3xl border border-stone-200/90 p-2 sm:p-5 md:p-6 shadow-sm mb-6 -mx-1 sm:mx-0">
+                <div className="grid grid-cols-2 gap-2 sm:gap-5 md:gap-6">
+                  {CATEGORIES_GROUP_3.map(renderCategoryCard)}
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="bg-white rounded-2xl sm:rounded-3xl border border-stone-200/90 p-2 sm:p-5 md:p-6 shadow-sm mb-6 -mx-1 sm:mx-0">
+              <div className="grid grid-cols-2 gap-2 sm:gap-5 md:gap-6 mb-4">
+                {[...CATEGORIES_GROUP_1, ...CATEGORIES_GROUP_2, ...CATEGORIES_GROUP_3]
+                  .filter((cat) => {
+                    if (selectedCategoryFilter === 'amigurumi') return ['amigurumi', 'toys', 'animal', 'doll'].includes(cat.id);
+                    if (selectedCategoryFilter === 'baby') return ['baby-clothes-shoes', 'baby-cloth', 'slippers'].includes(cat.id);
+                    if (selectedCategoryFilter === 'wearables') return ['women-clothes', 'winter-collection', 'hat', 'slippers'].includes(cat.id);
+                    if (selectedCategoryFilter === 'bags') return ['backpack', 'bags-handbag', 'purse-basket', 'keychain'].includes(cat.id);
+                    if (selectedCategoryFilter === 'decor') return ['festival', 'earring', 'blanket', 'pillow', 'alphabets', 'granny-square', 'flower', 'hanging-holder'].includes(cat.id);
+                    return true;
+                  })
+                  .map(renderCategoryCard)}
+              </div>
+              <div className="text-center pt-2">
+                <button
+                  type="button"
+                  onClick={() => setSelectedCategoryFilter('all')}
+                  className="text-xs font-bold text-[#ea580c] hover:underline cursor-pointer"
+                >
+                  ← Show All 20+ Categories
+                </button>
+              </div>
             </div>
-          </div>
-
-          {renderConsistentTimer('Price Increases Soon')}
-
-          {/* Group 3 Grid */}
-          <div className="bg-white rounded-2xl sm:rounded-3xl border border-stone-200/90 p-2 sm:p-5 md:p-6 shadow-sm mb-6 -mx-1 sm:mx-0">
-            <div className="grid grid-cols-2 gap-2 sm:gap-5 md:gap-6">
-              {CATEGORIES_GROUP_3.map(renderCategoryCard)}
-            </div>
-          </div>
+          )}
 
           {/* Clean CTA block */}
           <div className="my-6 text-center">
             <a
               href={OFFER_2200_CONFIG.checkoutUrl}
               onClick={handleCheckoutClick}
-              className="w-full max-w-sm mx-auto bg-[#ea580c] hover:bg-[#c2410c] active:scale-[0.99] text-white font-black py-3.5 px-6 rounded-2xl shadow-md text-base tracking-wide uppercase transition-all flex items-center justify-center gap-2 cursor-pointer no-underline"
+              className="w-full max-w-sm mx-auto bg-[#ea580c] text-white font-black py-3.5 px-6 rounded-2xl text-base tracking-wide uppercase flex items-center justify-center gap-2 cursor-pointer no-underline btn-high-converting"
             >
               <ShoppingCart className="w-5 h-5" />
               <span>GET THIS FULL BUNDLE @ ₹199</span>
@@ -992,7 +1081,7 @@ export function Offer2200Placeholder(_props: Offer2200PlaceholderProps = {}) {
               <a
                 href={OFFER_2200_CONFIG.checkoutUrl}
                 onClick={handleCheckoutClick}
-                className="w-full max-w-sm mx-auto bg-[#ea580c] hover:bg-[#c2410c] active:scale-[0.99] text-white font-black py-3.5 px-6 rounded-2xl shadow-md text-base tracking-wide uppercase transition-all flex items-center justify-center gap-2 cursor-pointer no-underline"
+                className="w-full max-w-sm mx-auto bg-[#ea580c] text-white font-black py-3.5 px-6 rounded-2xl text-base tracking-wide uppercase flex items-center justify-center gap-2 cursor-pointer no-underline btn-high-converting"
               >
                 <ShoppingCart className="w-5 h-5" />
                 <span>CLAIM ALL 6 BONUSES @ ₹199</span>
@@ -1066,7 +1155,7 @@ export function Offer2200Placeholder(_props: Offer2200PlaceholderProps = {}) {
           <a
             href={OFFER_2200_CONFIG.checkoutUrl}
             onClick={handleCheckoutClick}
-            className="w-full max-w-sm mx-auto bg-[#ea580c] hover:bg-[#c2410c] active:scale-[0.99] text-white font-black py-3.5 px-6 rounded-xl shadow-lg hover:shadow-orange-500/25 text-base sm:text-lg tracking-wide uppercase transition-all flex items-center justify-center gap-2 cursor-pointer no-underline"
+            className="w-full max-w-sm mx-auto bg-[#ea580c] text-white font-black py-3.5 px-6 rounded-xl text-base sm:text-lg tracking-wide uppercase flex items-center justify-center gap-2 cursor-pointer no-underline btn-high-converting"
           >
             <span>GET INSTANT ACCESS @ ₹199</span>
           </a>
@@ -1151,16 +1240,52 @@ export function Offer2200Placeholder(_props: Offer2200PlaceholderProps = {}) {
       {/* Floating Back to Top Button */}
       <BackToTop />
 
-      {/* Sticky Bottom Bar for Mobile */}
-      <div className="fixed bottom-0 left-0 right-0 p-3 bg-white/95 backdrop-blur-xs border-t border-stone-200 z-40 shadow-lg">
+      {/* Interactive Sample Pattern & Video Walkthrough Preview Modal */}
+      <PatternPreviewModal
+        isOpen={isPreviewOpen}
+        onClose={() => setIsPreviewOpen(false)}
+        onOpenCheckout={handleCheckoutClick}
+      />
+
+      {/* Sticky Bottom Bar for Mobile (Thumb-Friendly, Responsive >= 44px Touch Target) */}
+      <div className="fixed bottom-0 left-0 right-0 p-2 sm:p-3 bg-white/95 backdrop-blur-md border-t border-stone-200/90 z-40 shadow-2xl pb-[calc(0.5rem+env(safe-area-inset-bottom,0px))]">
         <div className="max-w-md mx-auto">
-          <a
-            href={OFFER_2200_CONFIG.checkoutUrl}
-            onClick={handleCheckoutClick}
-            className="w-full bg-[#ea580c] hover:bg-[#c2410c] active:scale-[0.99] text-white font-black py-3 px-4 rounded-xl shadow-md text-base tracking-wide uppercase transition-all flex items-center justify-center gap-2 cursor-pointer no-underline"
-          >
-            <span>GET INSTANT ACCESS @ ₹199</span>
-          </a>
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            {/* Left Price Stack */}
+            <div className="text-left shrink-0 pl-1">
+              <div className="flex items-baseline gap-1.5 leading-none">
+                <span className="text-xl sm:text-2xl font-black text-[#dc2626] font-sans">
+                  ₹199
+                </span>
+                <span className="text-xs text-stone-400 line-through font-bold">
+                  ₹2,999
+                </span>
+              </div>
+              <span className="inline-block mt-0.5 text-[10px] font-extrabold uppercase tracking-wide text-emerald-800 bg-emerald-100 px-1.5 py-0.5 rounded">
+                ⚡ 93% OFF Today
+              </span>
+            </div>
+
+            {/* Right Thumb-Reachable Action Button (min-h-[48px] for optimal mobile touch) */}
+            <a
+              href={OFFER_2200_CONFIG.checkoutUrl}
+              onClick={handleCheckoutClick}
+              className="flex-1 bg-[#ea580c] text-white font-black min-h-[48px] py-3 px-3 rounded-xl text-sm sm:text-base tracking-wide uppercase flex items-center justify-center gap-2 cursor-pointer no-underline btn-high-converting"
+            >
+              <ShoppingCart className="w-4 h-4 shrink-0" />
+              <span>BUY NOW @ ₹199</span>
+            </a>
+          </div>
+
+          {/* Micro Payment & Trust Row Under Sticky Button */}
+          <div className="mt-1 flex items-center justify-center gap-2 text-[10px] text-stone-500 font-semibold">
+            <span>UPI • GPay • PhonePe • Cards</span>
+            <span>•</span>
+            <span className="text-emerald-700 flex items-center gap-0.5">
+              <ShieldCheck className="w-3 h-3 text-emerald-600 inline" />
+              Instant Download
+            </span>
+          </div>
         </div>
       </div>
     </div>

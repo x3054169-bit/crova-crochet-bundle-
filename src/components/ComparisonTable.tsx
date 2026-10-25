@@ -264,7 +264,7 @@ export function ComparisonTable({
             <a
               href={checkoutUrl}
               onClick={onOpenCheckout}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#ea580c] hover:bg-[#c2410c] active:scale-[0.98] text-white font-black py-3 px-6 rounded-xl shadow-lg hover:shadow-orange-500/30 text-sm sm:text-base tracking-wide uppercase transition-all shrink-0 cursor-pointer no-underline"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#ea580c] text-white font-black py-3 px-6 rounded-xl text-sm sm:text-base tracking-wide uppercase shrink-0 cursor-pointer no-underline btn-high-converting"
             >
               <span>Get Crova for ₹199</span>
               <ArrowRight className="w-4 h-4" />

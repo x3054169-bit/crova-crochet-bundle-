@@ -421,7 +421,7 @@ export function ExitIntentModal({
               <button
                 type="button"
                 onClick={handleClaim}
-                className="w-full bg-[#ea580c] hover:bg-[#c2410c] active:scale-[0.99] text-white text-base sm:text-lg font-black py-3.5 px-6 rounded-2xl shadow-xl hover:shadow-orange-500/30 transition-all flex items-center justify-center gap-2 uppercase tracking-wide cursor-pointer"
+                className="w-full bg-[#ea580c] text-white text-base sm:text-lg font-black py-3.5 px-6 rounded-2xl flex items-center justify-center gap-2 uppercase tracking-wide cursor-pointer btn-high-converting"
               >
                 <span>Claim 10% Discount @ ₹{discountedPrice}</span>
                 <ArrowRight className="w-5 h-5" />
