@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef, type MouseEvent } from 'react';
-import { X, Sparkles, Copy, Check, Clock, ShieldCheck, ArrowRight, Tag, Gift, Download } from 'lucide-react';
+import { X, Copy, Check, ShieldCheck, Download, Gift, Sparkles } from 'lucide-react';
 import { OFFER_2200_CONFIG } from '../data/offer2200';
 
 interface ExitIntentModalProps {
@@ -11,8 +11,8 @@ interface ExitIntentModalProps {
   onOpenCheckout?: (customUrl?: string, customValue?: number, coupon?: string) => void;
 }
 
-const STORAGE_SHOWN_KEY = 'crova_exit_intent_shown_v2';
-const STORAGE_DISMISSED_KEY = 'crova_exit_intent_dismissed_v2';
+const STORAGE_SHOWN_KEY = 'crova_exit_intent_shown_v3';
+const STORAGE_DISMISSED_KEY = 'crova_exit_intent_dismissed_v3';
 
 export function ExitIntentModal({
   discountCode = 'SAVE10',
@@ -24,13 +24,12 @@ export function ExitIntentModal({
 }: ExitIntentModalProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [hasCopied, setHasCopied] = useState(false);
-  const [secondsRemaining, setSecondsRemaining] = useState(600); // 10 minutes
   const [showFloatingPill, setShowFloatingPill] = useState(false);
   const maxScrollDepth = useRef<number>(0);
   const historyPushed = useRef<boolean>(false);
   const triggeredRef = useRef<boolean>(false);
 
-  // Construct target checkout URL with coupon query parameter
+  // Target checkout URL with auto-applied coupon parameters
   const couponCheckoutUrl = checkoutUrl.includes('?') 
     ? `${checkoutUrl}&coupon=${discountCode}&code=${discountCode}`
     : `${checkoutUrl}?coupon=${discountCode}&code=${discountCode}`;
@@ -71,7 +70,7 @@ export function ExitIntentModal({
       isEligible = true;
     }, 1500);
 
-    // 2. Desktop Mouseleave and rapid upward mouse movement detection
+    // 2. Desktop mouseleave and rapid upward mouse movement detection
     const handleMouseLeave = (e: globalThis.MouseEvent) => {
       if (!isEligible) return;
       if (e.clientY <= 20) {
@@ -81,7 +80,6 @@ export function ExitIntentModal({
 
     const handleMouseMove = (e: globalThis.MouseEvent) => {
       if (!isEligible) return;
-      // If cursor is within top 12px of viewport
       if (e.clientY <= 12) {
         triggerModal();
       }
@@ -94,7 +92,7 @@ export function ExitIntentModal({
     const setupHistoryInterceptor = () => {
       try {
         if (!historyPushed.current && window.history && window.history.pushState) {
-          window.history.pushState({ crova_view: 'crochet_patterns' }, '', window.location.href);
+          window.history.pushState({ crova_view: 'crochet_checkout_intent' }, '', window.location.href);
           historyPushed.current = true;
         }
       } catch {
@@ -107,9 +105,8 @@ export function ExitIntentModal({
     const handlePopState = () => {
       if (isEligible && !triggeredRef.current) {
         triggerModal();
-        // Re-push so forward/back stays inside the page
         try {
-          window.history.pushState({ crova_view: 'crochet_patterns' }, '', window.location.href);
+          window.history.pushState({ crova_view: 'crochet_checkout_intent' }, '', window.location.href);
         } catch {
           // ignore
         }
@@ -137,7 +134,7 @@ export function ExitIntentModal({
 
     window.addEventListener('scroll', handleScroll, { passive: true });
 
-    // 5. Inactivity fallback trigger: if user stays on page for 45s without taking action
+    // 5. Inactivity fallback trigger: 45s
     const idleTimer = setTimeout(() => {
       if (isEligible && !triggeredRef.current) {
         triggerModal();
@@ -154,17 +151,6 @@ export function ExitIntentModal({
       window.removeEventListener('scroll', handleScroll);
     };
   }, [triggerModal]);
-
-  // Countdown timer for urgency
-  useEffect(() => {
-    if (!isOpen) return;
-
-    const interval = setInterval(() => {
-      setSecondsRemaining((prev) => (prev > 0 ? prev - 1 : 0));
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [isOpen]);
 
   // Handle ESC key to close and lock body scroll while open
   useEffect(() => {
@@ -200,7 +186,7 @@ export function ExitIntentModal({
   }, [discountCode]);
 
   const handleClaim = () => {
-    // Automatically copy discount code to clipboard for seamless checkout
+    // Auto-copy discount code to clipboard for seamless checkout paste
     try {
       navigator.clipboard.writeText(discountCode);
     } catch {
@@ -261,29 +247,26 @@ export function ExitIntentModal({
     setShowFloatingPill(false);
   };
 
-  const minutes = Math.floor(secondsRemaining / 60);
-  const seconds = secondsRemaining % 60;
-  const formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-
   return (
     <>
-      {/* Floating Re-openable Coupon Pill (shows when modal has been closed/dismissed) */}
+      {/* Floating Reopen Pill (appears if modal is closed, allowing user to retrieve their 10% coupon) */}
       {showFloatingPill && !isOpen && (
         <aside
-          aria-label="Exclusive Discount Offer"
-          className="fixed bottom-20 left-3 sm:bottom-6 sm:left-6 z-40 animate-in fade-in slide-in-from-bottom-4 duration-300"
+          aria-label="Exclusive 10% Discount Offer"
+          className="fixed bottom-24 left-3 sm:bottom-6 sm:left-6 z-40 animate-in fade-in slide-in-from-bottom-3 duration-300"
         >
           <button
             type="button"
             onClick={handleReopen}
-            className="group flex items-center gap-2.5 bg-gradient-to-r from-amber-500 via-[#ea580c] to-amber-600 text-white pl-3.5 pr-4 py-2.5 rounded-full shadow-2xl hover:shadow-orange-500/40 border-2 border-amber-200 active:scale-95 transition-all cursor-pointer font-bold text-xs sm:text-sm tracking-wide"
+            className="group flex items-center gap-2 bg-[#1c1917] hover:bg-stone-900 text-white pl-3 pr-3.5 py-2.5 rounded-full shadow-2xl border border-amber-300/80 active:scale-95 transition-all cursor-pointer font-bold text-xs sm:text-sm tracking-wide"
           >
-            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/20 text-white animate-pulse">
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-orange-600 text-white">
               <Gift className="w-3.5 h-3.5 text-amber-100" />
             </span>
             <span className="flex items-center gap-1.5">
-              <span>Claim Extra 10% OFF</span>
-              <span className="bg-white text-[#ea580c] px-2 py-0.5 rounded-md font-mono font-black text-xs">
+              <span className="text-stone-200">Reserved:</span>
+              <span className="text-amber-400 font-mono font-black">{discountCode}</span>
+              <span className="bg-[#ea580c] text-white px-1.5 py-0.5 rounded font-black text-[11px]">
                 ₹{discountedPrice}
               </span>
             </span>
@@ -291,31 +274,29 @@ export function ExitIntentModal({
         </aside>
       )}
 
-      {/* Main Exit Intent Modal */}
+      {/* Main Emotionally Persuasive Checkout Retention Modal */}
       {isOpen && (
         <div
           role="dialog"
           aria-modal="true"
-          aria-label="Exclusive 10% Exit Discount Offer"
-          className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200"
+          aria-label="Exclusive 10% Checkout Retention Offer"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-xs animate-in fade-in duration-200"
           onClick={handleClose}
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl border-2 border-amber-400 overflow-hidden transform animate-in zoom-in-95 duration-200 text-center"
+            className="relative w-full max-w-[460px] bg-[#fdfbf7] rounded-3xl shadow-2xl border border-amber-200/90 overflow-hidden transform animate-in zoom-in-95 duration-200 text-center"
           >
-            {/* Urgency Ribbon Header */}
-            <div className="bg-gradient-to-r from-red-600 via-[#ea580c] to-amber-600 text-white px-4 py-2.5 sm:py-3 flex items-center justify-center gap-2 relative">
-              <span className="text-xs sm:text-sm font-black tracking-widest uppercase flex items-center gap-1.5">
-                <Sparkles className="w-4 h-4 fill-amber-300 text-amber-300 animate-spin" />
-                Wait! Special Exit Privilege
-                <Sparkles className="w-4 h-4 fill-amber-300 text-amber-300 animate-spin" />
+            {/* TOP BAR */}
+            <div className="bg-gradient-to-r from-[#c2410c] via-[#ea580c] to-[#c2410c] text-white px-4 py-2.5 sm:py-3 flex items-center justify-center relative">
+              <span className="text-xs sm:text-sm font-black tracking-widest uppercase flex items-center gap-1 text-amber-100 font-sans">
+                ✨ WAIT — BEFORE YOU GO ✨
               </span>
 
               <button
                 type="button"
                 onClick={handleClose}
-                aria-label="Close discount popup"
+                aria-label="Close retention popup"
                 className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 p-1.5 text-white/80 hover:text-white hover:bg-black/20 rounded-full transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
@@ -324,120 +305,128 @@ export function ExitIntentModal({
 
             {/* Modal Body */}
             <div className="p-5 sm:p-7">
-              {/* Eyebrow badge */}
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-100 border border-orange-200 text-[#ea580c] text-xs font-bold uppercase tracking-wider mb-2.5">
-                <Tag className="w-3.5 h-3.5" />
-                <span>10% Extra Off Voucher Code</span>
-              </div>
-
-              <h3 className="text-2xl sm:text-3xl font-black text-stone-900 leading-tight mb-2 font-sans">
-                Take An Extra{' '}
-                <span className="text-[#ea580c] underline decoration-[#ea580c]/30 decoration-4">
-                  {discountPercent}% OFF
-                </span>{' '}
-                Right Now!
+              {/* MAIN HEADLINE */}
+              <h3 className="text-2xl sm:text-[27px] font-black text-stone-900 leading-tight mb-2.5 font-sans tracking-tight">
+                You’re Really Going to{' '}
+                <span className="text-[#ea580c] underline decoration-[#ea580c]/30 decoration-3">
+                  Leave It Behind?
+                </span>
               </h3>
 
-              <p className="text-stone-600 text-sm sm:text-base font-medium max-w-md mx-auto mb-4">
-                We don’t want price to hold you back. Get the complete 2,200+ Pattern Mega Library for just{' '}
-                <strong className="text-stone-950 font-black text-lg sm:text-xl">
-                  ₹{discountedPrice}
-                </strong>{' '}
-                <span className="text-stone-400 line-through text-sm">
-                  ₹{originalPrice}
-                </span>{' '}
-                <span className="text-stone-400 line-through text-xs hidden sm:inline">
-                  (₹2,499)
-                </span>
-                .
+              {/* SUBHEAD with subtle emotional emphasis */}
+              <p className="text-stone-700 text-xs sm:text-[13.5px] leading-relaxed max-w-sm mx-auto mb-4 font-normal">
+                You came looking for crochet patterns for a reason.
+                <br />
+                Don’t let <strong className="text-stone-950 font-black bg-amber-100/90 px-1 py-0.5 rounded text-stone-900">₹20</strong> be the reason you leave without the complete library.
               </p>
 
-              {/* Coupon Code Voucher Ticket Box */}
-              <div className="relative bg-gradient-to-br from-amber-50 to-orange-50/80 border-2 border-dashed border-amber-400 rounded-2xl p-4 mb-4 shadow-xs">
-                <div className="flex items-center justify-between flex-wrap gap-2.5">
-                  <div className="text-left">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-stone-500 block">
-                      Voucher Code:
+              {/* OFFER CALLOUT BOX */}
+              <div className="bg-[#fff9f2] border border-amber-200/90 rounded-2xl p-3.5 sm:p-4 mb-3.5 text-left shadow-2xs">
+                <p className="text-xs sm:text-sm font-bold text-stone-900 leading-snug">
+                  Get 2,200+ Crochet Patterns + 6 Exclusive Bonuses + Video Tutorials today for just{' '}
+                  <span className="text-[#ea580c] font-black text-base sm:text-lg">₹{discountedPrice}</span>.
+                </p>
+
+                {/* VOUCHER & PRICE TRANSITION */}
+                <div className="mt-3 pt-3 border-t border-amber-200/70 flex items-center justify-between flex-wrap gap-2">
+                  <div>
+                    {/* DISCOUNT LABEL */}
+                    <span className="block text-[10px] sm:text-[11px] font-black tracking-wider text-amber-900/90 uppercase font-sans">
+                      YOUR 10% OFF IS RESERVED FOR YOU
                     </span>
-                    <span className="text-2xl font-black font-mono tracking-widest text-[#ea580c]">
-                      {discountCode}
-                    </span>
+                    
+                    {/* COUPON CODE */}
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className="text-xl sm:text-2xl font-black font-mono tracking-wider text-[#ea580c]">
+                        {discountCode}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={handleCopyCode}
+                        className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold transition-all shadow-2xs cursor-pointer ${
+                          hasCopied
+                            ? 'bg-emerald-600 text-white'
+                            : 'bg-white hover:bg-stone-50 text-stone-800 border border-stone-300'
+                        }`}
+                      >
+                        {hasCopied ? (
+                          <>
+                            <Check className="w-3.5 h-3.5 stroke-[3]" />
+                            <span>Copied!</span>
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="w-3.5 h-3.5" />
+                            <span>Copy</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={handleCopyCode}
-                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all shadow-xs cursor-pointer ${
-                      hasCopied
-                        ? 'bg-emerald-600 text-white'
-                        : 'bg-white hover:bg-stone-50 text-stone-800 border border-stone-300'
-                    }`}
-                  >
-                    {hasCopied ? (
-                      <>
-                        <Check className="w-4 h-4 stroke-[3]" />
-                        <span>Code Copied!</span>
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="w-4 h-4" />
-                        <span>Copy Code</span>
-                      </>
-                    )}
-                  </button>
+                  {/* PRICE TRANSITION: "₹199" crossed out → "₹179" */}
+                  <div className="text-right">
+                    <span className="text-[10px] text-stone-500 font-bold block uppercase tracking-wider">
+                      Price Today
+                    </span>
+                    <div className="flex items-baseline gap-1.5">
+                      <span className="text-sm sm:text-base text-stone-400 font-bold line-through">
+                        ₹{originalPrice}
+                      </span>
+                      <span className="text-stone-400 text-xs font-bold">→</span>
+                      <span className="text-2xl sm:text-3xl font-black text-[#dc2626] font-sans">
+                        ₹{discountedPrice}
+                      </span>
+                    </div>
+                  </div>
                 </div>
 
-                {/* Micro Benefits in Coupon Box */}
-                <div className="mt-3 pt-2.5 border-t border-amber-200/80 grid grid-cols-2 gap-2 text-left text-xs text-stone-700">
-                  <div className="flex items-center gap-1.5 font-medium">
-                    <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                    <span>All 2,200+ Patterns Included</span>
+                {/* BENEFITS LIST */}
+                <div className="mt-3 pt-3 border-t border-amber-200/70 grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs text-stone-800">
+                  <div className="flex items-center gap-1.5 font-bold">
+                    <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0 stroke-[3]" />
+                    <span>2,200+ Patterns Included</span>
                   </div>
-                  <div className="flex items-center gap-1.5 font-medium">
-                    <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                    <span>6 Free Exclusive Bonuses</span>
+                  <div className="flex items-center gap-1.5 font-bold">
+                    <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0 stroke-[3]" />
+                    <span>6 Exclusive Bonuses</span>
                   </div>
-                  <div className="flex items-center gap-1.5 font-medium">
-                    <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <div className="flex items-center gap-1.5 font-bold">
+                    <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0 stroke-[3]" />
                     <span>Video Tutorials Included</span>
                   </div>
-                  <div className="flex items-center gap-1.5 font-medium">
-                    <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <div className="flex items-center gap-1.5 font-bold">
+                    <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0 stroke-[3]" />
                     <span>Instant Lifetime Access</span>
                   </div>
                 </div>
-
-                {/* Timer countdown line */}
-                <div className="mt-3 pt-2 border-t border-amber-200/80 flex items-center justify-center gap-1.5 text-xs text-amber-900 font-bold">
-                  <Clock className="w-3.5 h-3.5 text-[#ea580c]" />
-                  <span>Coupon reserved for next: </span>
-                  <span className="font-mono bg-white px-2 py-0.5 rounded border border-amber-300 text-[#ea580c] font-black">
-                    {formattedTime}
-                  </span>
-                </div>
               </div>
 
-              {/* Main Action Claim CTA */}
+              {/* PRIMARY CTA */}
               <button
                 type="button"
                 onClick={handleClaim}
-                className="w-full bg-[#ea580c] text-white text-base sm:text-lg font-black py-3.5 px-6 rounded-2xl flex items-center justify-center gap-2 uppercase tracking-wide cursor-pointer btn-high-converting"
+                className="w-full bg-[#ea580c] text-white text-base sm:text-[17px] font-black min-h-[50px] py-3 px-5 rounded-2xl flex items-center justify-center gap-2 uppercase tracking-wide cursor-pointer btn-high-converting shadow-lg hover:shadow-orange-500/25 active:scale-[0.99] transition-all"
               >
-                <span>Claim 10% Discount @ ₹{discountedPrice}</span>
-                <ArrowRight className="w-5 h-5" />
+                <span>CLAIM MY 10% OFF — ₹{discountedPrice} →</span>
               </button>
 
-              {/* Dismiss Option */}
+              {/* SECONDARY EXIT LINK */}
               <button
                 type="button"
                 onClick={handleClose}
-                className="mt-3 text-xs sm:text-sm text-stone-400 hover:text-stone-600 font-semibold underline underline-offset-4 transition-colors cursor-pointer"
+                className="mt-3 text-xs sm:text-[13px] text-stone-400 hover:text-stone-600 font-semibold underline underline-offset-4 transition-colors cursor-pointer block mx-auto"
               >
-                No thanks, I will pay ₹{originalPrice} later
+                No thanks, I’ll pay ₹{originalPrice} later
               </button>
 
-              {/* Trust Guarantees */}
-              <div className="mt-4 pt-3 border-t border-stone-100 flex items-center justify-center flex-wrap gap-x-4 gap-y-1 text-[11px] text-stone-500 font-semibold">
+              {/* BOTTOM EMOTIONAL LINE */}
+              <p className="mt-4 text-xs text-stone-600 italic font-medium leading-relaxed max-w-sm mx-auto">
+                “One small decision today could give you hundreds of ideas to create tomorrow.”
+              </p>
+
+              {/* FOOTER */}
+              <div className="mt-3.5 pt-3 border-t border-stone-200/70 flex items-center justify-center gap-2 text-[11px] sm:text-xs text-stone-500 font-semibold">
                 <span className="flex items-center gap-1">
                   <Download className="w-3.5 h-3.5 text-emerald-600" />
                   Instant Google Drive Access
@@ -445,7 +434,7 @@ export function ExitIntentModal({
                 <span>•</span>
                 <span className="flex items-center gap-1">
                   <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                  UPI, Cards &amp; NetBanking
+                  UPI, Cards &amp; Net Banking
                 </span>
               </div>
             </div>
